@@ -28,6 +28,9 @@
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 1.25em;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
 }
 
 .header__name{
