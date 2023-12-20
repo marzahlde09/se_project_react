@@ -1,0 +1,32 @@
+.item-card{
+  width: 325px;
+  height: 328px;
+  border-radius: 20px;
+  border: 1px rgba(0, 0, 0, .3);
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.item-card__picture{
+  position: absolute;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.item-card__name{
+  border-radius: 4px;
+  background-color: white;
+  color: rgba(0,0,0,.6);
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  padding: 2px 12px;
+  margin-top: 17px;
+  position: relative;
+  z-index: 1;
+}

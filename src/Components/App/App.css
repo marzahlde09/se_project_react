@@ -1,6 +1,9 @@
 .app {
   box-sizing: border-box;
   padding: 32px 40px 24px 40px;
+  background-color: #f3f3f3;
+  margin: 0;
+  min-height: 100vh
 }
 
 .app__main{
