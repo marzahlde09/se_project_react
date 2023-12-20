@@ -1,0 +1,53 @@
+.weather-card{
+  width: 100%;
+  border-radius: 12px;
+  height: 80px;
+  background-size: cover;
+  background-position: top right;
+}
+
+.weather-card_type_cloudy-day{
+  background-image: url("../../images/cloudy_day.png");
+}
+.weather-card_type_fog-day{
+  background-image: url("../../images/fog_day.png");
+}
+.weather-card_type_rain-day{
+  background-image: url("../../images/rain_day.png");
+}
+.weather-card_type_snow-day{
+  background-image: url("../../images/snow_day.png");
+}
+.weather-card_type_storm-day{
+  background-image: url("../../images/storm_day.png");
+}
+.weather-card_type_sunny-day{
+  background-image: url("../../images/sunny_day.png");
+}
+.weather-card_type_cloudy-night{
+  background-image: url("../../images/cloudy_night.png");
+}
+.weather-card_type_fog-night{
+  background-image: url("../../images/fog_night.png");
+}
+.weather-card_type_rain-night{
+  background-image: url("../../images/rain_night.png");
+}
+.weather-card_type_snow-night{
+  background-image: url("../../images/snow_night.png");
+}
+.weather-card_type_storm-night{
+  background-image: url("../../images/storm_night.png");
+}
+.weather-card_type_sunny-night{
+  background-image: url("../../images/sunny_night.png");
+}
+
+.weather-card__temperature{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2.25em;
+  padding: none;
+  margin: 20px 0 20px 16px;
+  color: white;
+}
