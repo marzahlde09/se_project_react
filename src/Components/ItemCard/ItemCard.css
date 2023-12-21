@@ -2,7 +2,7 @@
   width: 325px;
   height: 328px;
   border-radius: 20px;
-  border: 1px rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, .3);
   position: relative;
   display: flex;
   flex-direction: row;

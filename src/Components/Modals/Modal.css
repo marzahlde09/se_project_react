@@ -1,0 +1,57 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.4s, opacity 0.4s linear;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal_type_form {
+  margin: 0 auto 0 auto;
+}
+
+.popup__picture {
+  margin: 0 auto 0 auto;
+}
+
+.modal__close-button {
+  cursor: pointer;
+  position: absolute;
+  transform: rotate(45deg);
+  background-image: url(../../images/close_button.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: opacity 0.4s ease-in-out;
+  border: none;
+}
+
+.popup__close-button_type_form {
+  top: -48.28px;
+  right: -48.28px;
+}
+
+.popup__close-button_type_picture {
+  top: -49px;
+  right: -49.57px;
+}
+
+.popup__close-button:hover {
+  opacity: 0.6;
+}
