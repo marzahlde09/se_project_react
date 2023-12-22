@@ -12,6 +12,7 @@ function App() {
   const [temperature, setTemperature] = useState(0);
   const [sunrise, setSunrise] = useState(0);
   const [sunset, setSunset] = useState(0);
+  const [openModal, setOpenModal] = useState("");
 
   useEffect(() => {
     getWeatherInfo()
@@ -26,11 +27,19 @@ function App() {
   }, []);
 
   const handleCloseModal = () => {
-    document.querySelector(".modal_opened").classList.remove("modal_opened");
+    setOpenModal("");
+    window.removeEventListener("keydown", handleEscClose);
   }
 
   const handleOpenGarmentForm = () => {
-    document.querySelector(".modal_type_garment-form").classList.add("modal_opened");
+    setOpenModal("garment-form");
+    window.addEventListener("keydown", handleEscClose);
+  }
+
+  const handleEscClose = (e) => {
+    if (e.key === "Escape") {
+      handleCloseModal();
+    }
   }
 
   return (
@@ -38,7 +47,29 @@ function App() {
       <Header location={location} onClickAdd={handleOpenGarmentForm} />
       <Main weatherId={weatherId} temperature={temperature} sunrise={sunrise} sunset={sunset}/>
       <Footer />
-      <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}/>
+      {
+        openModal === "garment-form" &&
+        <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
+          <p>Name</p>
+          <input type="text" required="true" placeholder="Name"/>
+          <p>Image</p>
+          <input type="url" required="true" placeholder="Image URL"/>
+          <p>Select the weather type:</p>
+          <label>
+            <input type="radio" id="hot" name="weather" value="Hot" />
+            Hot
+          </label>
+          <label>
+            <input type="radio" id="warm" name="weather" value="Warm" />
+            Warm
+          </label>
+          <label>
+            <input type="radio" id="cold" name="weather" value="Cold" />
+            Cold
+          </label>
+        </ModalWithForm>
+      }
+
     </div>
   );
 }

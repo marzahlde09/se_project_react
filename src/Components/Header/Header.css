@@ -28,9 +28,13 @@
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 1.25em;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   cursor: pointer;
+}
+
+.header__add-button:active{
+  border: none;
 }
 
 .header__name{
