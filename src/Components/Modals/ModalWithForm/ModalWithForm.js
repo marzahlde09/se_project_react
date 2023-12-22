@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './ModalWithForm.css';
 import '../Modal.css';
 
 function ModalWithForm(props){
-  const currentDate = new Date().toLocaleString('default', {month: 'long', day: 'numeric' });
+  useEffect(() => {
+    window.addEventListener("keydown", props.onClose);
+  });
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("keydown", props.onClose);
+    }
+  }, []);
+
   return(
-    <section className={`modal modal_type_${props.name}`}>
+    <section onClick={props.onClose} className={`modal modal_type_${props.name}`}>
       <form name={`${props.name}`} className="form modal__form">
-        <button type="button" className="modal__close-button"></button>
+        <button onClick={props.onClose} type="button" className="modal__close-button"></button>
         <p className="form__title">{props.title}</p>
         {props.children}
         <button type="submit" className="form__submit">{props.buttonText}</button>
@@ -16,4 +24,4 @@ function ModalWithForm(props){
   )
 }
 
-export default Header;
+export default ModalWithForm;

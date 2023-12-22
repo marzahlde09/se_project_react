@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from '../../images/logo.svg';
 import avatar from '../../images/avatar.png';
 import './Header.css';
 
 function Header(props){
   const currentDate = new Date().toLocaleString('default', {month: 'long', day: 'numeric' });
+
+  useEffect(() => {
+    this.querySelector(".header__add-button").addEventListener("click", props.onClickAdd);
+  });
+
   return(
     <header className="header">
       <div className="header__wrapper">

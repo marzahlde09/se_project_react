@@ -3,6 +3,7 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
+import ModalWithForm from '../Modals/ModalWithForm/ModalWithForm';
 import {getWeatherInfo} from '../../utils/weatherApi';
 
 function App() {
@@ -24,11 +25,20 @@ function App() {
       .catch((err) => console.error(err));
   }, []);
 
+  const handleCloseModal = () => {
+    document.querySelector(".modal_opened").classList.remove("modal_opened");
+  }
+
+  const handleOpenGarmentForm = () => {
+    document.querySelector(".modal_type_garment-form").classList.add("modal_opened");
+  }
+
   return (
     <div className="app">
-      <Header location={location}/>
+      <Header location={location} onClickAdd={handleOpenGarmentForm} />
       <Main weatherId={weatherId} temperature={temperature} sunrise={sunrise} sunset={sunset}/>
       <Footer />
+      <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}/>
     </div>
   );
 }

@@ -7,3 +7,51 @@
   align-items: flex-start;
   width: 496px;
 }
+
+.form__title{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.form__input-wrapper{
+
+}
+
+.form__label{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+}
+
+.form__input{
+  border: none;
+  border-bottom: #000000 1px solid;
+  padding-bottom: 4px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.form__submit{
+  border-radius: 4px;
+  margin-top: 32px;
+  background-color: #000000;
+  padding: 8px 16px;
+  font-family: "Cabinet Grotesk";
+  font-size: 1em;
+  font-weight: 700;
+  color: white;
+  transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.form__submit:hover{
+  opacity: 60%;
+}
+
+.form__submit_disabled {
+  opacity: 30%;
+}
+
