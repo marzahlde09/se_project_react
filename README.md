@@ -37,4 +37,4 @@ Garment preview opened
 
 ## Link to demo video
 
-[![Watch the video]](https://youtu.be/QU7gyVU-UBw)
+[![Watch the video](https://i.postimg.cc/02bYy3cb/wtwr-no-modal.png)](https://youtu.be/QU7gyVU-UBw)
