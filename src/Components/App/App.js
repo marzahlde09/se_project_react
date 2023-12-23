@@ -40,7 +40,6 @@ function App() {
   }
 
   const handleSelectedCard = (card) => {
-    console.log(card);
     setSelectedCard(card);
     setOpenModal("item");
     window.addEventListener("keydown", handleEscClose);
