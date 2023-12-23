@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/se_project_react/static/css/main.c03379a9.css",
+    "main.js": "/se_project_react/static/js/main.c0b625e3.js",
+    "static/js/787.aec36e2a.chunk.js": "/se_project_react/static/js/787.aec36e2a.chunk.js",
+    "static/media/CabinetGrotesk-Bold.woff": "/se_project_react/static/media/CabinetGrotesk-Bold.0fb1cbec860aa3537c32.woff",
+    "static/media/CabinetGrotesk-Medium.woff": "/se_project_react/static/media/CabinetGrotesk-Medium.1928499875b5b3682ea5.woff",
+    "static/media/CabinetGrotesk-Bold.woff2": "/se_project_react/static/media/CabinetGrotesk-Bold.c9c3bc30c44ade9d3b9b.woff2",
+    "static/media/CabinetGrotesk-Medium.woff2": "/se_project_react/static/media/CabinetGrotesk-Medium.467bcdaa2530ea758403.woff2",
+    "static/media/fog_night.png": "/se_project_react/static/media/fog_night.1abb94995fa162296f6a.png",
+    "static/media/fog_day.png": "/se_project_react/static/media/fog_day.b08112b74bc884082ef6.png",
+    "static/media/logo.svg": "/se_project_react/static/media/logo.680b54a3d7ea1deb779a22177ba7913f.svg",
+    "index.html": "/se_project_react/index.html",
+    "main.c03379a9.css.map": "/se_project_react/static/css/main.c03379a9.css.map",
+    "main.c0b625e3.js.map": "/se_project_react/static/js/main.c0b625e3.js.map",
+    "787.aec36e2a.chunk.js.map": "/se_project_react/static/js/787.aec36e2a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c03379a9.css",
+    "static/js/main.c0b625e3.js"
+  ]
+}
