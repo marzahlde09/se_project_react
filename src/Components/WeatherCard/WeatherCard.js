@@ -1,34 +1,36 @@
 import React from 'react';
 import './WeatherCard.css';
 
-function WeatherCard(props){
+function WeatherCard({sunrise, sunset, weatherId, temperature}){
   const currentTime = Math.floor(Date.now() / 1000);
-  let timeOfDay;
-  currentTime > props.sunrise && currentTime < props.sunset ? timeOfDay = "day" : timeOfDay = "night";
-  let weather;
-  switch(true){
-    case 701 <= props.weatherId && props.weatherId <= 781:
-      weather = "fog";
-      break;
-    case props.weatherId > 800:
-      weather = "cloudy";
-      break;
-    case 600 <= props.weatherId && props.weatherId <= 622:
-      weather = "snow";
-      break;
-    case (500 <= props.weatherId && props.weatherId <= 531) || (300 <= props.weatherId && props.weatherId <= 321):
-      weather = "rain";
-      break;
-    case 200 <= props.weatherId && props.weatherId <= 232:
-      weather = "storm";
-      break;
-    default:
-      weather = "sunny";
+  const getTimeOfDay = () => {
+    if(currentTime > sunrise && currentTime < sunset){
+      return "day";
+    } else{
+    return "night";
+    }
   }
+  const getWeather = () => {
+    if(701 <= weatherId && weatherId <= 781){
+      return "fog";
+    } else if(weatherId > 800){
+      return "cloudy";
+    } else if(600 <= weatherId && weatherId <= 622){
+      return "snow";
+    } else if((500 <= weatherId && weatherId <= 531) || (300 <= weatherId && weatherId <= 321)){
+      return "rain";
+    } else if(200 <= weatherId && weatherId <= 232){
+      return "storm";
+    } else{
+      return "sunny";
+    }
+  }
+  const timeOfDay = getTimeOfDay();
+  const weather = getWeather();
 
   return(
-    <div className={"weather-card weather-card_type_" + weather + "-" + timeOfDay}>
-      <p className="weather-card__temperature">{props.temperature}°F</p>
+    <div className={`weather-card weather-card_type_${weather}-${timeOfDay}`}>
+      <p className="weather-card__temperature">{temperature}°F</p>
     </div>
   )
 }

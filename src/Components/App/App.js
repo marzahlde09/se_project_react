@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import ModalWithForm from '../Modals/ModalWithForm/ModalWithForm';
-import ItemModal from '../Modals/ItemModal/ItemModal';
+import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import ItemModal from '../ItemModal/ItemModal';
 import {getWeatherInfo} from '../../utils/weatherApi';
 
 function App() {
@@ -45,11 +45,11 @@ function App() {
     window.addEventListener("keydown", handleEscClose);
   }
 
-  const handleEscClose = (e) => {
+  const handleEscClose = useCallback((e) => {
     if (e.key === "Escape") {
-      handleCloseModal();
-    }
-  }
+          handleCloseModal();
+      }
+  }, []);
 
   return (
     <div className="app">
@@ -59,10 +59,10 @@ function App() {
       {
         openModal === "garment-form" &&
         <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
-          <p>Name*</p>
-          <input type="text" required placeholder="Name"/>
-          <p>Image*</p>
-          <input type="url" required placeholder="Image URL"/>
+          <label for="name">Name*</label>
+          <input type="text" required placeholder="Name" id="name"/>
+          <label for="url">Image*</label>
+          <input type="url" required placeholder="Image URL" id="url"/>
           <p>Select the weather type:</p>
           <label>
             <input type="radio" id="hot" name="weather" value="Hot" required/>

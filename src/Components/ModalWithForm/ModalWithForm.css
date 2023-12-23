@@ -13,7 +13,7 @@
 .form__close-button{
   cursor: pointer;
   position: absolute;
-  background-image: url(../../../images/form_close.png);
+  background-image: url(../../images/form_close.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -76,18 +76,18 @@
   color: #000000;
 }
 
-.form p{
+.form label:has(+ input[type="text"], + input[type="url"]){
   margin: 24px 0 0 0;
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-size: 1em;
   font-weight: 700;
 }
 
-.form p:has(+ input:invalid){
+.form label:has(+ input[type="text"]:invalid, + input[type="url"]:invalid){
   color: #FF4D00;
 }
 
-.form p:has(+ input:placeholder-shown){
+.form label:has(+ input[type="text"]:placeholder-shown, + input[type="url"]:placeholder-shown){
   color: #000000;
 }
 
@@ -105,6 +105,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.form p{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  padding: 0;
+  margin-top: 24px;
 }
 
 .form label:first-of-type{

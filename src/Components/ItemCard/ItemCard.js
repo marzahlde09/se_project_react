@@ -1,11 +1,11 @@
 import React from 'react';
 import './ItemCard.css';
 
-function ItemCard(props){
+function ItemCard({onSelectCard, item}){
   return(
-    <div className="item-card" onClick={() => props.onSelectCard(props.item)}>
-      <img src={props.item.link} alt={props.item.name} className="item-card__picture"/>
-      <p className="item-card__name">{props.item.name}</p>
+    <div className="item-card" onClick={() => onSelectCard(item)}>
+      <img src={item.link} alt={item.name} className="item-card__picture"/>
+      <p className="item-card__name">{item.name}</p>
     </div>
   )
 }
