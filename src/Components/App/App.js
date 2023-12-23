@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import ModalWithForm from '../Modals/ModalWithForm/ModalWithForm';
+import ItemModal from '../Modals/ItemModal/ItemModal';
 import {getWeatherInfo} from '../../utils/weatherApi';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [sunrise, setSunrise] = useState(0);
   const [sunset, setSunset] = useState(0);
   const [openModal, setOpenModal] = useState("");
+  const [selectedCard, setSelectedCard] = useState({});
 
   useEffect(() => {
     getWeatherInfo()
@@ -28,11 +30,19 @@ function App() {
 
   const handleCloseModal = () => {
     setOpenModal("");
+    setSelectedCard({});
     window.removeEventListener("keydown", handleEscClose);
   }
 
   const handleOpenGarmentForm = () => {
     setOpenModal("garment-form");
+    window.addEventListener("keydown", handleEscClose);
+  }
+
+  const handleSelectedCard = (card) => {
+    console.log(card);
+    setSelectedCard(card);
+    setOpenModal("item");
     window.addEventListener("keydown", handleEscClose);
   }
 
@@ -45,18 +55,18 @@ function App() {
   return (
     <div className="app">
       <Header location={location} onClickAdd={handleOpenGarmentForm} />
-      <Main weatherId={weatherId} temperature={temperature} sunrise={sunrise} sunset={sunset}/>
+      <Main weatherId={weatherId} temperature={temperature} sunrise={sunrise} sunset={sunset} onSelectCard={handleSelectedCard}/>
       <Footer />
       {
         openModal === "garment-form" &&
         <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
-          <p>Name</p>
-          <input type="text" required="true" placeholder="Name"/>
-          <p>Image</p>
-          <input type="url" required="true" placeholder="Image URL"/>
+          <p>Name*</p>
+          <input type="text" required placeholder="Name"/>
+          <p>Image*</p>
+          <input type="url" required placeholder="Image URL"/>
           <p>Select the weather type:</p>
           <label>
-            <input type="radio" id="hot" name="weather" value="Hot" />
+            <input type="radio" id="hot" name="weather" value="Hot" required/>
             Hot
           </label>
           <label>
@@ -69,7 +79,10 @@ function App() {
           </label>
         </ModalWithForm>
       }
-
+      {
+        openModal === "item" &&
+        <ItemModal link={selectedCard.link} name={selectedCard.name} weather={selectedCard.weather} onClose={handleCloseModal}/>
+      }
     </div>
   );
 }

@@ -1,0 +1,56 @@
+.item-modal{
+  border-radius: 16px;
+  flex-direction: column;
+  overflow: hidden;
+  display: flex;
+  background-color: #ffffff;
+  position: relative;
+  max-width: 498px;
+}
+
+.item-modal__close-button{
+  cursor: pointer;
+  position: absolute;
+  background-image: url(../../images/item_close.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  top: 20px;
+  right: 28px;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: opacity 0.4s ease-in-out;
+  border: none;
+}
+
+.item-modal__close-button:hover{
+  opacity: 0.6;
+}
+
+.item-modal__image {
+  width: 498px;
+  height: 498px;
+  object-fit: cover;
+}
+
+.item-modal__text-wrapper {
+  box-sizing: border-box;
+  padding: 20px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.item-modal__text{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  padding: 0;
+  margin: 12px 0 0 0;
+}
+
+.item-modal__text:first-of-type{
+  margin-top: 0;
+}

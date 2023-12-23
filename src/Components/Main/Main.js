@@ -7,7 +7,7 @@ import {defaultClothingItems} from '../../utils/constants';
 
 function Main(props){
   const itemCards = defaultClothingItems.map((item) =>
-    <ItemCard key={item._id} name={item.name} weather={item.weather} link={item.link} />
+    <ItemCard key={item._id} item={item} onSelectCard={props.onSelectCard}/>
   );
   return(
     <main className="main app__main">

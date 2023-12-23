@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .item-card__picture{

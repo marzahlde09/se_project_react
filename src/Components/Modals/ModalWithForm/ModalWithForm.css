@@ -1,5 +1,5 @@
 .form{
-  border-radius: 20px;
+  border-radius: 16px;
   border: 1px solid rgb(0,0,0,.3);
   padding: 28px 28px 36px 28px;
   display: flex;
@@ -8,6 +8,26 @@
   width: 496px;
   background-color: #FFFFFF;
   position: relative;
+}
+
+.form__close-button{
+  cursor: pointer;
+  position: absolute;
+  background-image: url(../../images/form_close.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  top: 20px;
+  right: 28px;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: opacity 0.4s ease-in-out;
+  border: none;
+}
+
+.form__close-button:hover{
+  opacity: 0.6;
 }
 
 .form input[type="radio"]{
@@ -20,12 +40,19 @@
   font-weight: 700;
 }
 
+.form input:focus{
+  outline: none;
+}
+
 .form input[type="text"]{
   border: none;
   border-bottom: #000000 1px solid;
   padding-bottom: 4px;
   margin-top: 8px;
   width: 100%;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
 }
 
 .form input[type="url"]{
@@ -34,6 +61,19 @@
   padding-bottom: 4px;
   margin-top: 8px;
   width: 100%;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.form input:invalid{
+  border-bottom: #FF4D00 1px solid;
+  color: #FF4D00;
+}
+
+.form input:placeholder-shown{
+  border-bottom: #000000 1px solid;
+  color: #000000;
 }
 
 .form p{
@@ -41,6 +81,14 @@
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-size: 1em;
   font-weight: 700;
+}
+
+.form p:has(+ input:invalid){
+  color: #FF4D00;
+}
+
+.form p:has(+ input:placeholder-shown){
+  color: #000000;
 }
 
 .form__title{
@@ -61,6 +109,22 @@
 
 .form label:first-of-type{
   margin-top: 12px;
+}
+
+.form label:has(input[type="radio"]){
+  opacity: 50%;
+}
+
+.form input[type="radio"]{
+  opacity: 50%;
+}
+
+.form label:has(input[type="radio"]:checked){
+  opacity: 100%;
+}
+
+input[type="radio"]:checked{
+  opacity: 100%;
 }
 
 .form__submit{

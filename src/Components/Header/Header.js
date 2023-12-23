@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import logo from '../../images/logo.svg';
 import avatar from '../../images/avatar.png';
 import './Header.css';
