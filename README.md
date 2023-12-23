@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# Project 3: WTWR with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+WTWR web page that displays a gallery of garments depending on the weather. The garments are assigned a type of weather (currently hot, warm, and cold) and are only added to the DOM if they match the weather fetched from Open Weather Map. A banner appears below the header displaying the current temperature and an image depending on the type of weather outside (clear, cloudy, rainy, stormy, snowy, foggy). The project is built using React and JSX.
 
-## Available Scripts
+## Technologies & Techniques
 
-In the project directory, you can run:
+- JSX
+- React
+- Function Components
+- React hooks
+- CSS
+- BEM Methodology
+- API requests
 
-### `npm start`
+## Link to GitHub Pages
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[github-pages-link](https://marzahlde09.github.io/se_project_react/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Plan on improving the project
 
-### `npm test`
+- Different users should have their own authentication and page so as to store their own garments and refer to the weather locally
+- Users should be able to "like" garments, possibly including them earlier in the list as frequently viewed cards
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots of project features
 
-### `npm run build`
+Typical website with temperature, weather card, location, and garments loading depending on the fetched weather
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[![wtwr-no-modal.png](https://i.postimg.cc/02bYy3cb/wtwr-no-modal.png)](https://postimg.cc/fJQtHH4N)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+New garment form opened, with a selected radio button and an invalid text input
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[![wtwr-modal-with-form.png](https://i.postimg.cc/7hQSNMYH/wtwr-modal-with-form.png)](https://postimg.cc/MfVc6BQN)
 
-### `npm run eject`
+Garment preview opened
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+[![wtwr-item-modal.png](https://i.postimg.cc/nVdKZZKy/wtwr-item-modal.png)](https://postimg.cc/w3mRcCG2)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Link to demo video
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[![Watch the video]](https://youtu.be/QU7gyVU-UBw)
