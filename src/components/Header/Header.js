@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../images/logo.svg';
 import avatar from '../../images/avatar.png';
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import './Header.css';
 
 function Header({location, onClickAdd}){
@@ -12,6 +13,7 @@ function Header({location, onClickAdd}){
         <p className="header__date-location">{currentDate}, {location}</p>
       </div>
       <div className="header__wrapper">
+        <ToggleSwitch />
         <button type="button" className="header__add-button" onClick={onClickAdd}>+ Add clothes</button>
         <p className="header__name">Terrence Tegegne</p>
         <img className="header__avatar" src={avatar} alt="User avatar"/>

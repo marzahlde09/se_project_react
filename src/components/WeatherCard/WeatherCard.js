@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './WeatherCard.css';
+import { CurrentTemperatureUnitContext } from '../../contexts/CurrentTemperatureUnitContext';
 
 function WeatherCard({sunrise, sunset, weatherId, temperature}){
+  const {currentTemperatureUnit} = useContext(CurrentTemperatureUnitContext);
   const currentTime = Math.floor(Date.now() / 1000);
   const getTimeOfDay = () => {
     if(currentTime > sunrise && currentTime < sunset){
@@ -30,7 +32,7 @@ function WeatherCard({sunrise, sunset, weatherId, temperature}){
 
   return(
     <div className={`weather-card weather-card_type_${weather}-${timeOfDay}`}>
-      <p className="weather-card__temperature">{temperature}°F</p>
+      <p className="weather-card__temperature">{temperature}°{currentTemperatureUnit}</p>
     </div>
   )
 }
