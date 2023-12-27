@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './Main.css';
 import '../App/App.css';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import ItemCard from '../ItemCard/ItemCard';
 import {defaultClothingItems} from '../../utils/constants';
+import { CurrentTemperatureUnitContext } from '../../contexts/CurrentTemperatureUnitContext';
 
 function Main({temperature, weatherId, sunrise, sunset, onSelectCard}){
+  const {currentTemperatureUnit} = useContext(CurrentTemperatureUnitContext);
   const getWeather = () => {
     if(temperature >= 86){
       return 'hot';
@@ -22,7 +24,7 @@ function Main({temperature, weatherId, sunrise, sunset, onSelectCard}){
     <main className="main app__main">
       <WeatherCard weatherId={weatherId} temperature={temperature} sunrise={sunrise} sunset={sunset} />
       <section className="main__cards-wrapper">
-        <p className="main__section-heading">Today is {temperature}° F / You may want to wear:</p>
+        <p className="main__section-heading">Today is {temperature}° {currentTemperatureUnit} / You may want to wear:</p>
         <ul className="main__cards">
           {defaultClothingItems.map((item) =>
             item.weather === weather &&

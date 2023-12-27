@@ -5,11 +5,17 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import ItemModal from '../ItemModal/ItemModal';
+import Profile from '../Profile/Profile';
 import {getWeatherInfo} from '../../utils/weatherApi';
 import {CurrentTemperatureUnitContext} from '../../contexts/CurrentTemperatureUnitContext';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 function App() {
-  const [weather, setWeather] = useState({});
+  const [location, setLocation] = useState('');
+  const [weatherId, setWeatherId] = useState(800);
+  const [temperature, setTemperature] = useState({F: 0, C: 0});
+  const [sunrise, setSunrise] = useState(0);
+  const [sunset, setSunset] = useState(0);
   const [openModal, setOpenModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
@@ -17,10 +23,11 @@ function App() {
   useEffect(() => {
     getWeatherInfo()
       .then((res) => {
-        const weatherData = res;
-        weatherData.temperature.F = `${Math.round(res.main.temp)}°F`;
-        weatherData.temperature.C = `${Math.round((res.main.temp - 32) * 5/9)}°C`;
-        setWeather(weatherData);
+        setLocation(res.name);
+        setWeatherId(res.weather[0].id);
+        setTemperature({F: Math.round(res.main.temp), C: Math.round((res.main.temp - 32) * 5/9)});
+        setSunrise(res.sys.sunrise);
+        setSunset(res.sys.sunset);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -53,39 +60,48 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <CurrentTemperatureUnitContext.Provider value={{currentTemperatureUnit, handleToggleSwitchChange}}>
-        <Header location={weather.location} onClickAdd={handleOpenGarmentForm} />
-        <Main weatherId={weather.current.weather.id} temperature={`weather.temperature[${currentTemperatureUnit}]`} sunrise={weather.current.sunrise} sunset={weather.current.sunset} onSelectCard={handleSelectedCard}/>
-        <Footer />
-        {
-          openModal === "garment-form" &&
-          <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
-            <label for="name">Name*</label>
-            <input type="text" required placeholder="Name" id="name"/>
-            <label for="url">Image*</label>
-            <input type="url" required placeholder="Image URL" id="url"/>
-            <p>Select the weather type:</p>
-            <label>
-              <input type="radio" id="hot" name="weather" value="Hot" required/>
-              Hot
-            </label>
-            <label>
-              <input type="radio" id="warm" name="weather" value="Warm" />
-              Warm
-            </label>
-            <label>
-              <input type="radio" id="cold" name="weather" value="Cold" />
-              Cold
-            </label>
-          </ModalWithForm>
-        }
-        {
-          openModal === "item" &&
-          <ItemModal link={selectedCard.link} name={selectedCard.name} weather={selectedCard.weather} onClose={handleCloseModal}/>
-        }
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <CurrentTemperatureUnitContext.Provider value={{currentTemperatureUnit, handleToggleSwitchChange}}>
+          <Header location={location} onClickAdd={handleOpenGarmentForm} />
+          <Switch>
+            <Route exact path = "/">
+              <Main weatherId={weatherId} temperature={temperature[`${currentTemperatureUnit}`]} sunrise={sunrise} sunset={sunset} onSelectCard={handleSelectedCard}/>
+            </Route>
+            <Route path="/profile">
+              <Profile onSelectCard={handleSelectedCard} onClickAdd={handleOpenGarmentForm} />
+            </Route>
+          </Switch>
+          <Footer />
+          {
+            openModal === "garment-form" &&
+            <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
+              <label for="name">Name*</label>
+              <input type="text" required placeholder="Name" id="name"/>
+              <label for="url">Image*</label>
+              <input type="url" required placeholder="Image URL" id="url"/>
+              <p>Select the weather type:</p>
+              <label>
+                <input type="radio" id="hot" name="weather" value="Hot" required/>
+                Hot
+              </label>
+              <label>
+                <input type="radio" id="warm" name="weather" value="Warm" />
+                Warm
+              </label>
+              <label>
+                <input type="radio" id="cold" name="weather" value="Cold" />
+                Cold
+              </label>
+            </ModalWithForm>
+          }
+          {
+            openModal === "item" &&
+            <ItemModal link={selectedCard.link} name={selectedCard.name} weather={selectedCard.weather} onClose={handleCloseModal}/>
+          }
+        </CurrentTemperatureUnitContext.Provider>
+      </div>
+    </BrowserRouter>
   );
 }
 

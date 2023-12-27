@@ -3,20 +3,25 @@ import logo from '../../images/logo.svg';
 import avatar from '../../images/avatar.png';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import './Header.css';
+import {Link} from 'react-router-dom';
 
 function Header({location, onClickAdd}){
   const currentDate = new Date().toLocaleString('default', {month: 'long', day: 'numeric' });
   return(
     <header className="header">
       <div className="header__wrapper">
-        <img className="header__logo" src={logo} alt="WTWR Logo" />
+        <Link to="/">
+          <img className="header__logo" src={logo} alt="WTWR Logo" />
+        </Link>
         <p className="header__date-location">{currentDate}, {location}</p>
       </div>
       <div className="header__wrapper">
         <ToggleSwitch />
         <button type="button" className="header__add-button" onClick={onClickAdd}>+ Add clothes</button>
         <p className="header__name">Terrence Tegegne</p>
-        <img className="header__avatar" src={avatar} alt="User avatar"/>
+        <Link to="/profile">
+          <img className="header__avatar" src={avatar} alt="User avatar"/>
+        </Link>
       </div>
     </header>
   )
