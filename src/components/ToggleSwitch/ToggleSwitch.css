@@ -13,14 +13,14 @@
   height: 24px;
   background: white;
   border-radius: 20px;
-  border: 2px #7E7E7E solid;
+  border: 2px #7e7e7e solid;
   box-sizing: content-box;
   position: relative;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
 }
 
 .toggle-switch__label .toggle-switch__button {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
@@ -31,7 +31,9 @@
   background: #000;
 }
 
-.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__button {
+.toggle-switch__checkbox:checked
+  + .toggle-switch__label
+  .toggle-switch__button {
   left: calc(100% + 2px);
   transform: translateX(-100%);
 }
@@ -40,17 +42,34 @@
   width: 30px;
 }
 
-.toggle-switch__text{
+.toggle-switch__text {
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700px;
-  font-size: .875em;
+  font-size: 0.875em;
+  color: #7e7e7e;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 28px;
   height: 28px;
-  background: inherit;
-  background-clip: text;
-  color: transparent;
-  filter: invert(1);
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-switch__checkbox
+  + .toggle-switch__label
+  .toggle-switch__text:first-of-type {
+  color: white;
+}
+
+.toggle-switch__checkbox:checked
+  + .toggle-switch__label
+  .toggle-switch__text:last-of-type {
+  color: white;
+}
+
+.toggle-switch__checkbox:checked
+  + .toggle-switch__label
+  .toggle-switch__text:first-of-type {
+  color: #7e7e7e;
 }
