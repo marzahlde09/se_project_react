@@ -1,0 +1,21 @@
+.side-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.side-bar__avatar{
+  height: 56px;
+  width: 56px;
+  border: 1px rgba(0, 0, 0, .5) solid;
+  border-radius: 50%;
+}
+
+.side-bar__name{
+  margin: 0 0 0 16px;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1.25em;
+  font-weight: 700;
+  padding: 0;
+}
