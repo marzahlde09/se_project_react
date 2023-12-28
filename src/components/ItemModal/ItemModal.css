@@ -34,9 +34,16 @@
   object-fit: cover;
 }
 
-.item-modal__text-wrapper {
+.item-modal__content {
   box-sizing: border-box;
   padding: 20px 32px 32px 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.item-modal__info-wrapper{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -53,4 +60,16 @@
 
 .item-modal__text:first-of-type{
   margin-top: 0;
+}
+
+.item-modal__delete{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  color: #FF4D00;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
 }

@@ -1,0 +1,63 @@
+.delete-confirmation-modal{
+  border-radius: 20px;
+  flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+  position: relative;
+  width: 670px;
+  padding: 60px 0;
+}
+
+.delete-confirmation-modal__close-button{
+  cursor: pointer;
+  position: absolute;
+  background-image: url(../../images/form_close.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  top: 20px;
+  right: 20px;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: opacity 0.4s ease-in-out;
+  border: none;
+}
+
+.delete-confirmation-modal__close-button:hover{
+  opacity: 0.6;
+}
+
+.delete-confirmation-modal__text{
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.delete-confirmation-modal__confirm-button{
+  margin: 40px 0 0 0;
+  padding: 0;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  color: #FF4D00;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  border: none;
+}
+
+.delete-confirmation-modal__cancel-button{
+  margin: 24px 0 0 0;
+  padding: 0;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  border: none;
+}

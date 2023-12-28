@@ -3,8 +3,9 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import AddItemModal from '../AddItemModal/AddItemModal';
 import ItemModal from '../ItemModal/ItemModal';
+import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmationModal';
 import Profile from '../Profile/Profile';
 import {getWeatherInfo} from '../../utils/weatherApi';
 import {CurrentTemperatureUnitContext} from '../../contexts/CurrentTemperatureUnitContext';
@@ -19,6 +20,7 @@ function App() {
   const [openModal, setOpenModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
+  const [clothingItems, setClothingItems] = useState([]);
 
   useEffect(() => {
     getWeatherInfo()
@@ -49,6 +51,14 @@ function App() {
     window.addEventListener("keydown", handleEscClose);
   }
 
+  const openConfirmationModal = () => {
+    setOpenModal("confirm");
+  }
+
+  const handleCardDelete = () => {
+
+  }
+
   const handleEscClose = useCallback((e) => {
     if (e.key === "Escape") {
           handleCloseModal();
@@ -59,6 +69,11 @@ function App() {
     currentTemperatureUnit === 'F' ? setCurrentTemperatureUnit('C') : setCurrentTemperatureUnit('F');
   }
 
+  const handleAddItemSubmit = ({name, link, weather}) => {
+    setClothingItems([{id: clothingItems.length, name: name, link: link, weather: weather}, ...clothingItems]);
+    handleCloseModal();
+  }
+
   return (
     <BrowserRouter>
       <div className="app">
@@ -66,38 +81,24 @@ function App() {
           <Header location={location} onClickAdd={handleOpenGarmentForm} />
           <Switch>
             <Route exact path = "/">
-              <Main weatherId={weatherId} temperature={temperature[`${currentTemperatureUnit}`]} sunrise={sunrise} sunset={sunset} onSelectCard={handleSelectedCard}/>
+              <Main weatherId={weatherId} temperature={temperature[`${currentTemperatureUnit}`]} sunrise={sunrise} sunset={sunset} onSelectCard={handleSelectedCard} clothingItems={clothingItems}/>
             </Route>
             <Route path="/profile">
-              <Profile onSelectCard={handleSelectedCard} onClickAdd={handleOpenGarmentForm} />
+              <Profile onSelectCard={handleSelectedCard} onClickAdd={handleOpenGarmentForm} clothingItems={clothingItems}/>
             </Route>
           </Switch>
           <Footer />
           {
             openModal === "garment-form" &&
-            <ModalWithForm title="New garment" buttonText="Add garment" name="garment-form" onClose={handleCloseModal}>
-              <label for="name">Name*</label>
-              <input type="text" required placeholder="Name" id="name"/>
-              <label for="url">Image*</label>
-              <input type="url" required placeholder="Image URL" id="url"/>
-              <p>Select the weather type:</p>
-              <label>
-                <input type="radio" id="hot" name="weather" value="Hot" required/>
-                Hot
-              </label>
-              <label>
-                <input type="radio" id="warm" name="weather" value="Warm" />
-                Warm
-              </label>
-              <label>
-                <input type="radio" id="cold" name="weather" value="Cold" />
-                Cold
-              </label>
-            </ModalWithForm>
+            <AddItemModal onClose={handleCloseModal} onAddItem={handleAddItemSubmit} />
           }
           {
             openModal === "item" &&
-            <ItemModal link={selectedCard.link} name={selectedCard.name} weather={selectedCard.weather} onClose={handleCloseModal}/>
+            <ItemModal link={selectedCard.link} name={selectedCard.name} weather={selectedCard.weather} onClose={handleCloseModal} onDelete={openConfirmationModal}/>
+          }
+          {
+            openModal === "confirm" &&
+            <DeleteConfirmationModal onClose={handleCloseModal} onConfirm={handleCardDelete}/>
           }
         </CurrentTemperatureUnitContext.Provider>
       </div>
