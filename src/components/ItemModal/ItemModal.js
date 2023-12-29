@@ -3,16 +3,9 @@ import "./ItemModal.css";
 import "../Modal.css";
 
 function ItemModal({ selectedCard, onClose, onDelete }) {
-  const handleOutsideClickClose = (e) => {
-    if (e.target.classList.contains("modal")) {
-      onClose();
-    }
-  };
-
   return (
     <section
       className="modal modal_type_item"
-      onClick={handleOutsideClickClose}
     >
       <div className="item-modal">
         <button

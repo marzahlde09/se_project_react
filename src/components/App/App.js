@@ -106,9 +106,9 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
-  const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
+  const handleAddItemSubmit = (data) => {
     const makeRequest = () => {
-      return addItem({ name, imageUrl, weather }).then((res) => {
+      return addItem(data).then((res) => {
         setClothingItems([res, ...clothingItems]);
       });
     };
