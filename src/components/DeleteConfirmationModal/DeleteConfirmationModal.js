@@ -2,7 +2,12 @@ import React from "react";
 import "./DeleteConfirmationModal.css";
 import "../Modal.css";
 
-function DeleteConfirmationModal({ onClose, onConfirm, selectedCard }) {
+function DeleteConfirmationModal({
+  onClose,
+  onConfirm,
+  selectedCard,
+  isLoading,
+}) {
   const handleOutsideClickClose = (e) => {
     if (e.target.classList.contains("modal")) {
       onClose();
@@ -30,7 +35,7 @@ function DeleteConfirmationModal({ onClose, onConfirm, selectedCard }) {
           type="button"
           className="delete-confirmation-modal__confirm-button"
         >
-          Yes, delete item
+          {isLoading ? "Saving..." : "Yes, delete item"}
         </button>
         <button
           onClick={onClose}

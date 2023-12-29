@@ -9,7 +9,7 @@ const checkResponse = (res) => {
   }
 };
 
-const request = (url, options) => {
+export const request = (url, options) => {
   return fetch(url, options).then(checkResponse);
 };
 
@@ -19,18 +19,14 @@ export const getItems = () => {
   });
 };
 
-export const addItem = ({
-  name: name,
-  imageUrl: imageUrl,
-  weather: weather,
-}) => {
+export const addItem = ({ name, imageUrl, weather }) => {
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: header,
     body: JSON.stringify({
-      name: name,
-      weather: weather,
-      imageUrl: imageUrl,
+      name,
+      weather,
+      imageUrl,
     }),
   });
 };

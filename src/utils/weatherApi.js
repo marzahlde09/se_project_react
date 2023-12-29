@@ -1,17 +1,10 @@
-import {latitude, longitude, apiKey as APIkey} from "./constants";
+import { latitude, longitude, apiKey as APIkey } from "./constants";
+import { request } from "./api";
 
-export function getWeatherInfo(){
-  return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}` )
-    .then(processServerResponse);
-}
-
-const processServerResponse = (res) => {
-  if(res.ok){
-    return res.json();
-  }
-  else{
-    return Promise.reject(`Error: ${res.status}`);
-  }
+export function getWeatherInfo() {
+  return request(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
+  );
 }
 
 //API Key

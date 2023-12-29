@@ -1,9 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Main.css";
 import "../App/App.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import {
+  fahrenheitThreshholds,
+  celsiusThreshholds,
+} from "../../utils/constants";
 
 function Main({
   temperature,
@@ -14,16 +18,26 @@ function Main({
   clothingItems,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  const getWeather = () => {
-    if (temperature >= 86) {
-      return "hot";
-    } else if (temperature >= 66 && temperature <= 85) {
-      return "warm";
+  const [weather, setWeather] = useState("");
+  useEffect(() => {
+    if (currentTemperatureUnit === "F") {
+      if (temperature >= fahrenheitThreshholds.hot) {
+        setWeather("hot");
+      } else if (temperature >= fahrenheitThreshholds.warm) {
+        setWeather("warm");
+      } else {
+        setWeather("cold");
+      }
     } else {
-      return "cold";
+      if (temperature >= celsiusThreshholds.hot) {
+        setWeather("hot");
+      } else if (temperature >= celsiusThreshholds.warm) {
+        setWeather("warm");
+      } else {
+        setWeather("cold");
+      }
     }
-  };
-  const weather = getWeather();
+  }, [currentTemperatureUnit]);
 
   return (
     <main className="main app__main">

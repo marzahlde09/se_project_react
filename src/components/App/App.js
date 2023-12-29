@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -22,7 +22,9 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  //load in weather data once when the website is accessed
   useEffect(() => {
     getWeatherInfo()
       .then((res) => {
@@ -35,9 +37,10 @@ function App() {
         setSunrise(res.sys.sunrise);
         setSunset(res.sys.sunset);
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
   }, []);
 
+  //load in initial clothing items from the server
   useEffect(() => {
     getItems()
       .then((res) => {
@@ -46,39 +49,48 @@ function App() {
       .catch((err) => console.error(err));
   }, []);
 
+  //add and remove the escape event listener when modals are opened
+  useEffect(() => {
+    if (!openModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    const handleOutsideClickClose = (e) => {
+      if (e.target.classList.contains("modal")) {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("mousedown", handleOutsideClickClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+      document.removeEventListener("mousedown", handleOutsideClickClose);
+    };
+  }, [openModal]);
+
   const handleCloseModal = () => {
     setOpenModal("");
     setSelectedCard({});
-    window.removeEventListener("keydown", handleEscClose);
   };
 
   const handleOpenGarmentForm = () => {
     setOpenModal("garment-form");
-    window.addEventListener("keydown", handleEscClose);
   };
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
     setOpenModal("item");
-    window.addEventListener("keydown", handleEscClose);
   };
 
   const openConfirmationModal = () => {
     setOpenModal("confirm");
   };
-
-  const handleCardDelete = (id) => {
-    deleteItem(id)
-      .then(handleCloseModal)
-      .catch((err) => console.error(err));
-    setClothingItems(clothingItems.filter((item) => item._id !== id));
-  };
-
-  const handleEscClose = useCallback((e) => {
-    if (e.key === "Escape") {
-      handleCloseModal();
-    }
-  }, []);
 
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F"
@@ -86,13 +98,30 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
+  function handleSubmit(request) {
+    setIsLoading(true);
+    request()
+      .then(handleCloseModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }
+
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
-    addItem({ name: name, imageUrl: imageUrl, weather: weather })
-      .then((res) => {
+    const makeRequest = () => {
+      return addItem({ name, imageUrl, weather }).then((res) => {
         setClothingItems([res, ...clothingItems]);
-        handleCloseModal();
-      })
-      .catch((err) => console.error(err));
+      });
+    };
+    handleSubmit(makeRequest);
+  };
+
+  const handleCardDelete = (id) => {
+    const makeRequest = () => {
+      return deleteItem(id).then((res) => {
+        setClothingItems(clothingItems.filter((item) => item._id !== id));
+      });
+    };
+    handleSubmit(makeRequest);
   };
 
   return (
@@ -103,7 +132,7 @@ function App() {
         >
           <Header location={location} onClickAdd={handleOpenGarmentForm} />
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/se_project_react/">
               <Main
                 weatherId={weatherId}
                 temperature={temperature[`${currentTemperatureUnit}`]}
@@ -113,7 +142,7 @@ function App() {
                 clothingItems={clothingItems}
               />
             </Route>
-            <Route path="/profile">
+            <Route path="/se_project_react/profile">
               <Profile
                 onSelectCard={handleSelectedCard}
                 onClickAdd={handleOpenGarmentForm}
@@ -126,6 +155,7 @@ function App() {
             <AddItemModal
               onClose={handleCloseModal}
               onAddItem={handleAddItemSubmit}
+              isLoading={isLoading}
             />
           )}
           {openModal === "item" && (
@@ -140,6 +170,7 @@ function App() {
               onClose={handleCloseModal}
               onConfirm={handleCardDelete}
               selectedCard={selectedCard}
+              isLoading={isLoading}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
