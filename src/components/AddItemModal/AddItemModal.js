@@ -22,7 +22,9 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
       buttonText={isLoading ? "Saving..." : "Add garment"}
       name="garment-form"
       onClose={onClose}
-      onAddItem={handleSubmit}
+      onSubmit={handleSubmit}
+      hasAlternativeButton={false}
+      alternativeButtonText=""
     >
       <label htmlFor="name">Name*</label>
       <input

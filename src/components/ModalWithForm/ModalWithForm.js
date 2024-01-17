@@ -8,11 +8,13 @@ function ModalWithForm({
   title,
   buttonText,
   children,
-  onAddItem,
+  onSubmit,
+  hasAlternativeButton,
+  alternativeButtonText,
 }) {
   return (
     <section className={`modal modal_type_${name}`}>
-      <form name={`${name}`} className="form modal__form" onSubmit={onAddItem}>
+      <form name={`${name}`} className="form modal__form" onSubmit={onSubmit}>
         <button
           onClick={onClose}
           type="button"
@@ -20,9 +22,16 @@ function ModalWithForm({
         />
         <p className="form__title">{title}</p>
         {children}
-        <button type="submit" className="form__submit">
-          {buttonText}
-        </button>
+        <div className="form__button-wrapper">
+          <button type="submit" className="form__submit">
+            {buttonText}
+          </button>
+          {hasAlternativeButton && (
+            <button type="button" className="form__alternative-button">
+              {alternativeButtonText}
+            </button>
+          )}
+        </div>
       </form>
     </section>
   );

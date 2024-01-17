@@ -5,7 +5,7 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-function Header({ location, onClickAdd }) {
+function Header({ location, onClickAdd, onClickLogin }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -22,12 +22,11 @@ function Header({ location, onClickAdd }) {
       </div>
       <div className="header__wrapper">
         <ToggleSwitch />
-        <button
-          type="button"
-          className="header__add-button"
-          onClick={onClickAdd}
-        >
+        <button type="button" className="header__button" onClick={onClickAdd}>
           + Add clothes
+        </button>
+        <button type="button" className="header__button" onClick={onClickLogin}>
+          Log In
         </button>
         <p className="header__name">Terrence Tegegne</p>
         <Link to="/se_project_react/profile">

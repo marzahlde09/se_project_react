@@ -7,6 +7,8 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import Profile from "../Profile/Profile";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import LoginModal from "../LoginModal/LoginModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
 import { getItems, addItem, deleteItem } from "../../utils/api";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
@@ -23,6 +25,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   //load in weather data once when the website is accessed
   useEffect(() => {
@@ -83,6 +86,10 @@ function App() {
     setOpenModal("garment-form");
   };
 
+  const handleOpenLoginForm = () => {
+    setOpenModal("login");
+  };
+
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
     setOpenModal("item");
@@ -130,7 +137,11 @@ function App() {
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header location={location} onClickAdd={handleOpenGarmentForm} />
+          <Header
+            location={location}
+            onClickAdd={handleOpenGarmentForm}
+            onClickLogin={handleOpenLoginForm}
+          />
           <Switch>
             <Route exact path="/se_project_react/">
               <Main
@@ -142,13 +153,16 @@ function App() {
                 clothingItems={clothingItems}
               />
             </Route>
-            <Route path="/se_project_react/profile">
+            <ProtectedRoute
+              path="/se_project_react/profile"
+              loggedIn={loggedIn}
+            >
               <Profile
                 onSelectCard={handleSelectedCard}
                 onClickAdd={handleOpenGarmentForm}
                 clothingItems={clothingItems}
               />
-            </Route>
+            </ProtectedRoute>
           </Switch>
           <Footer />
           {openModal === "garment-form" && (
@@ -172,6 +186,17 @@ function App() {
               selectedCard={selectedCard}
               isLoading={isLoading}
             />
+          )}
+          {openModal === "register" && (
+            <DeleteConfirmationModal
+              onClose={handleCloseModal}
+              onConfirm={handleCardDelete}
+              selectedCard={selectedCard}
+              isLoading={isLoading}
+            />
+          )}
+          {openModal === "login" && (
+            <LoginModal onClose={handleCloseModal} isLoading={isLoading} />
           )}
         </CurrentTemperatureUnitContext.Provider>
       </div>

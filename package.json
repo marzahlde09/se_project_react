@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "lint": "npx eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.56.0",
     "gh-pages": "^6.1.1"
   },
   "homepage": "https://marzahlde09.github.io/se_project_react"
