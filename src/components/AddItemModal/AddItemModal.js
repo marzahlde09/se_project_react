@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import TextInput from "../TextInput/TextInput";
 import { useForm } from "../../hooks/useForm";
 
 const initialValues = { name: "", imageUrl: "", weather: "hot" };
@@ -26,7 +27,7 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
       hasAlternativeButton={false}
       alternativeButtonText=""
     >
-      <label htmlFor="name">Name*</label>
+      {/*<label htmlFor="name">Name*</label>
       <input
         type="text"
         name="name"
@@ -35,6 +36,14 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
         id="name"
         value={values.name}
         onChange={handleChange}
+  />*/}
+      <TextInput
+        labelText="Name*"
+        type="text"
+        name="name"
+        placeholder="Name"
+        initialValue=""
+        className="form__text-input"
       />
       <label htmlFor="url">Image*</label>
       <input

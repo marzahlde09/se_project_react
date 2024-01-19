@@ -47,7 +47,7 @@ function App() {
   useEffect(() => {
     getItems()
       .then((res) => {
-        setClothingItems(res);
+        setClothingItems(res.data);
       })
       .catch((err) => console.error(err));
   }, []);

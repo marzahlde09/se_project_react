@@ -30,6 +30,11 @@
   opacity: 0.6;
 }
 
+.form__text-input {
+  margin-top: 24px;
+  width: 100%;
+}
+
 .form input[type="radio"] {
   margin-right: 8px;
 }

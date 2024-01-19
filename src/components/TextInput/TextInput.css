@@ -1,0 +1,35 @@
+.text-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.text-input__label {
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  padding: 0;
+}
+
+.text-input__input {
+  border: none;
+  border-bottom: #000000 1px solid;
+  padding-bottom: 4px;
+  margin-top: 8px;
+  width: 100%;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.text-input__input::placeholder {
+  font-family: "Cabinet Grotesk";
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.text-input__input:focus {
+  outline: none;
+}
