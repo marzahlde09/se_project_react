@@ -8,7 +8,8 @@ const initialValues = { name: "", imageUrl: "", weather: "hot" };
 
 const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
   const { values, handleChange, setValues } = useForm(initialValues);
-  const [ validity, setValidity ] = useState({name: false, imageUrl: false})
+  const [ validity, setValidity ] = useState({name: false, imageUrl: false});
+  const [ submitEnabled, setSubmitEnabled ] = useState(false);
 
   useEffect(() => {
     setValues(initialValues);
@@ -19,9 +20,18 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
     onAddItem(values);
   }
 
+  const handleEnableSubmit = () => {
+    if(validity.name && validity.imageUrl){
+      setSubmitEnabled(true);
+    }
+    else{
+      setSubmitEnabled(false);
+    }
+  }
+
   return (
     <AddItemValidityContext.Provider
-          value={{ validity, setValidity }}
+          value={{ validity, submitEnabled, setValidity }}
     >
       <ModalWithForm
         title="New garment"
@@ -38,21 +48,23 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
           name="name"
           placeholder="Name"
           initialValue=""
-          errorText="Invalid Name"
+          errorText="Name must be between 2 and 30 characters"
           required = {true}
           minLength = {2}
           maxLength = {30}
           className="form__text-input"
+          onChange={handleEnableSubmit}
         />
-        <label htmlFor="url">Image*</label>
-        <input
+        <TextInput
+          labelText="Image*"
           type="url"
           name="imageUrl"
-          required
           placeholder="Image URL"
-          id="url"
-          value={values.imageUrl}
-          onChange={handleChange}
+          initialValue=""
+          errorText="Invalid Image URL"
+          required = {true}
+          className="form__text-input"
+          onChange={handleEnableSubmit}
         />
         <p>Select the weather type:</p>
         <label>

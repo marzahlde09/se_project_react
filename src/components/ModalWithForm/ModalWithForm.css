@@ -164,12 +164,13 @@ input[type="radio"]:checked {
   cursor: pointer;
 }
 
-.form__submit:hover {
-  opacity: 60%;
-}
-
 .form__submit_disabled {
   opacity: 30%;
+  pointer-events: none;
+}
+
+.form__submit:hover {
+  opacity: 60%;
 }
 
 .form__alternative-button {
