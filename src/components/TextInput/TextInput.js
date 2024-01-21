@@ -1,28 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
+import { AddItemValidityContext } from "../../contexts/AddItemValidityContext";
 import "./TextInput.css";
-import { useForm } from "../../hooks/useForm";
 
-const TextInput = ({ labelText, type, name, placeholder, initialValue }) => {
-  const { values, handleChange, setValues } = useForm({ [name]: initialValue });
-  const [isValid, setIsValid] = useState(false);
+const TextInput = ({ labelText, type, name, placeholder, initialValue, errorText, required, minLength, maxLength }) => {
+  const { validity, setValidity } = useContext(AddItemValidityContext);
+  const [value, setValue] = useState(initialValue);
 
-  useEffect(() => {
-    setValues({ [name]: initialValue });
-  }, []);
+ const handleChange = (e) => {
+    const {name, value} = e.target;
+    setValue(value);
+    setValidity({[name]: e.target.validity.valid});
+  }
 
   return (
     <div className="text-input">
+      {validity ?
       <label htmlFor={name} className="text-input__label">
         {labelText}
-      </label>
+      </label> :
+      <label htmlFor={name} className="text-input__label text-input__label_error">
+        {errorText}
+      </label>}
       <input
         type={type}
         name={name}
         id={name}
         placeholder={placeholder}
-        value={values.name}
+        value={value}
         onChange={handleChange}
         className="text-input__input"
+        required={required}
+        minLength={minLength}
+        maxLength={maxLength}
       />
     </div>
   );
