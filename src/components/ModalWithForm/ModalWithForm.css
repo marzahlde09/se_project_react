@@ -30,74 +30,8 @@
   opacity: 0.6;
 }
 
-.form__text-input {
-  margin-top: 24px;
-  width: 100%;
-}
-
 .form input[type="radio"] {
   margin-right: 8px;
-}
-
-.form input::placeholder {
-  font-family: "Cabinet Grotesk";
-  font-size: 1em;
-  font-weight: 700;
-}
-
-.form input:focus {
-  outline: none;
-}
-
-.form input[type="text"] {
-  border: none;
-  border-bottom: #000000 1px solid;
-  padding-bottom: 4px;
-  margin-top: 8px;
-  width: 100%;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
-  font-size: 1em;
-  font-weight: 700;
-}
-
-.form input[type="url"] {
-  border: none;
-  border-bottom: #000000 1px solid;
-  padding-bottom: 4px;
-  margin-top: 8px;
-  width: 100%;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
-  font-size: 1em;
-  font-weight: 700;
-}
-
-.form input:invalid {
-  border-bottom: #ff4d00 1px solid;
-  color: #ff4d00;
-}
-
-.form input:placeholder-shown {
-  border-bottom: #000000 1px solid;
-  color: #000000;
-}
-
-.form label:has(+ input[type="text"], + input[type="url"]) {
-  margin: 24px 0 0 0;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
-  font-size: 1em;
-  font-weight: 700;
-}
-
-.form label:has(+ input[type="text"]:invalid, + input[type="url"]:invalid) {
-  color: #ff4d00;
-}
-
-.form
-  label:has(
-    + input[type="text"]:placeholder-shown,
-    + input[type="url"]:placeholder-shown
-  ) {
-  color: #000000;
 }
 
 .form__title {
@@ -122,10 +56,6 @@
   font-weight: 700;
   padding: 0;
   margin-top: 24px;
-}
-
-.form label:first-of-type {
-  margin-top: 12px;
 }
 
 .form label:has(input[type="radio"]) {

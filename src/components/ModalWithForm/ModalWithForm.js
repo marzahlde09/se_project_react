@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AddItemValidityContext } from "../../contexts/AddItemValidityContext";
+import React from "react";
 import "./ModalWithForm.css";
 import "../Modal.css";
 
@@ -12,8 +11,8 @@ function ModalWithForm({
   onSubmit,
   hasAlternativeButton,
   alternativeButtonText,
+  submitEnabled,
 }) {
-  const { submitEnabled } = useContext(AddItemValidityContext);
   return (
     <section className={`modal modal_type_${name}`}>
       <form name={`${name}`} className="form modal__form" onSubmit={onSubmit}>
@@ -26,14 +25,19 @@ function ModalWithForm({
         <p className="form__title">{title}</p>
         {children}
         <div className="form__button-wrapper">
-          {submitEnabled ?
-          <button type="submit" className="form__submit">
-            {buttonText}
-          </button> :
-          <button type="submit" className="form__submit form__submit_disabled" disabled>
-          {buttonText}
-        </button>
-}
+          {submitEnabled ? (
+            <button type="submit" className="form__submit">
+              {buttonText}
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="form__submit form__submit_disabled"
+              disabled
+            >
+              {buttonText}
+            </button>
+          )}
           {hasAlternativeButton && (
             <button type="button" className="form__alternative-button">
               {alternativeButtonText}

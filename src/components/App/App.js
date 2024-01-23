@@ -9,6 +9,7 @@ import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmati
 import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import LoginModal from "../LoginModal/LoginModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
 import { getItems, addItem, deleteItem } from "../../utils/api";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
@@ -90,6 +91,10 @@ function App() {
     setOpenModal("login");
   };
 
+  const handleOpenRegisterForm = () => {
+    setOpenModal("register");
+  };
+
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
     setOpenModal("item");
@@ -141,6 +146,7 @@ function App() {
             location={location}
             onClickAdd={handleOpenGarmentForm}
             onClickLogin={handleOpenLoginForm}
+            onClickRegister={handleOpenRegisterForm}
           />
           <Switch>
             <Route exact path="/se_project_react/">
@@ -188,12 +194,7 @@ function App() {
             />
           )}
           {openModal === "register" && (
-            <DeleteConfirmationModal
-              onClose={handleCloseModal}
-              onConfirm={handleCardDelete}
-              selectedCard={selectedCard}
-              isLoading={isLoading}
-            />
+            <RegisterModal onClose={handleCloseModal} isLoading={isLoading} />
           )}
           {openModal === "login" && (
             <LoginModal onClose={handleCloseModal} isLoading={isLoading} />

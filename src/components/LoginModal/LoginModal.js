@@ -1,19 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm";
+import TextInput from "../TextInput/TextInput";
 
 const initialValues = { email: "", password: "" };
 
-const AddItemModal = ({ onClose, isLoading }) => {
-  const { values, handleChange, setValues } = useForm(initialValues);
+const LoginModal = ({ onClose, isLoading }) => {
+  const [values, setValues] = useState(initialValues);
+  const [validity, setValidity] = useState({ email: false, password: false });
+  const [submitEnabled, setSubmitEnabled] = useState(false);
 
   useEffect(() => {
     setValues(initialValues);
+    setSubmitEnabled(false);
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+    setValidity({ ...validity, [name]: e.target.validity.valid });
+    setSubmitEnabled(validity.email && validity.password);
+  };
 
   return (
     <ModalWithForm
@@ -24,29 +34,30 @@ const AddItemModal = ({ onClose, isLoading }) => {
       onSubmit={handleSubmit}
       hasAlternativeButton={true}
       alternativeButtonText="or Register"
+      submitEnabled={submitEnabled}
     >
-      <label htmlFor="email">Email</label>
-      <input
+      <TextInput
+        labelText="Email"
         type="email"
         name="email"
-        required
         placeholder="Email"
-        id="email"
-        value={values.email}
+        initialValue=""
+        errorText="Invalid email"
+        required={true}
         onChange={handleChange}
       />
-      <label htmlFor="password">Password</label>
-      <input
+      <TextInput
+        labelText="Password"
         type="password"
         name="password"
-        required
         placeholder="Password"
-        id="password"
-        value={values.password}
+        initialValue=""
+        errorText="Incorrect password"
+        required={true}
         onChange={handleChange}
       />
     </ModalWithForm>
   );
 };
 
-export default AddItemModal;
+export default LoginModal;
