@@ -12,6 +12,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
 import { getItems, addItem, deleteItem } from "../../utils/api";
+import { register, authorize } from "../../utils/auth";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -136,6 +137,16 @@ function App() {
     handleSubmit(makeRequest);
   };
 
+  const handleLogin = ({ email, password }) => {
+    return authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          setLoggedIn(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <BrowserRouter>
       <div className="app">
@@ -194,10 +205,18 @@ function App() {
             />
           )}
           {openModal === "register" && (
-            <RegisterModal onClose={handleCloseModal} isLoading={isLoading} />
+            <RegisterModal
+              onClose={handleCloseModal}
+              isLoading={isLoading}
+              handleLogin={handleLogin}
+            />
           )}
           {openModal === "login" && (
-            <LoginModal onClose={handleCloseModal} isLoading={isLoading} />
+            <LoginModal
+              onClose={handleCloseModal}
+              isLoading={isLoading}
+              handleLogin={handleLogin}
+            />
           )}
         </CurrentTemperatureUnitContext.Provider>
       </div>

@@ -32,11 +32,25 @@ export const authorize = (email, password) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.jwt) {
-        localStorage.setItem("jwt", data.jwt);
+      if (data.token) {
+        localStorage.setItem("jwt", data.token);
         return data;
       } else {
         return;
       }
     });
+};
+
+/* check that user's token is valid */
+export const checkToken = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data);
 };

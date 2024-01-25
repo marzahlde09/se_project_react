@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { register, authorize } from "../../utils/auth";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
 
 const initialValues = { email: "", password: "", name: "", avatar: "" };
 
-const RegisterModal = ({ onClose, isLoading }) => {
+const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
   const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState({
     email: false,
@@ -13,14 +15,40 @@ const RegisterModal = ({ onClose, isLoading }) => {
     avatar: false,
   });
   const [submitEnabled, setSubmitEnabled] = useState(false);
+  const [submissionError, setSubmissionError] = useState({
+    errorStatus: false,
+    message: "",
+  });
+  const history = useHistory();
 
   useEffect(() => {
     setValues(initialValues);
     setSubmitEnabled(false);
+    setSubmissionError({ errorStatus: false, message: "" });
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
+    let { email, password, name, avatar } = values;
+    register(name, avatar, email, password).then((res) => {
+      if (res) {
+        authorize(email, password)
+          .then((data) => {
+            if (data.token) {
+              handleLogin();
+              onClose();
+              history.push("/se_project_react/profile");
+            }
+          })
+          .catch((err) => console.log(err));
+        onClose();
+      } else {
+        setSubmissionError({
+          errorStatus: true,
+          message: "Something went wrong!",
+        });
+      }
+    });
   }
 
   const handleChange = (e) => {
