@@ -1,5 +1,4 @@
 const baseUrl = "http://localhost:3001";
-const header = { "Content-Type": "application/json" };
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -15,14 +14,17 @@ export const request = (url, options) => {
 
 export const getItems = () => {
   return request(`${baseUrl}/items`, {
-    headers: header,
+    headers: {"Content-Type": "application/json"},
   });
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
   return request(`${baseUrl}/items`, {
     method: "POST",
-    headers: header,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
     body: JSON.stringify({
       name,
       weather,
@@ -34,6 +36,9 @@ export const addItem = ({ name, imageUrl, weather }) => {
 export const deleteItem = (id) => {
   return request(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-    headers: header,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

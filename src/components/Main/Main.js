@@ -10,31 +10,30 @@ import {
 } from "../../utils/constants";
 
 function Main({
-  temperature,
-  weatherId,
-  sunrise,
-  sunset,
+  weather,
   onSelectCard,
   clothingItems,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  const [weather, setWeather] = useState("");
+  const [temperature, setTemperature] = useState(0);
+  const [weatherType, setWeatherType] = useState("");
   useEffect(() => {
+    setTemperature(weather.temperature[`${currentTemperatureUnit}`]);
     if (currentTemperatureUnit === "F") {
       if (temperature >= fahrenheitThreshholds.hot) {
-        setWeather("hot");
+        setWeatherType("hot");
       } else if (temperature >= fahrenheitThreshholds.warm) {
-        setWeather("warm");
+        setWeatherType("warm");
       } else {
-        setWeather("cold");
+        setWeatherType("cold");
       }
     } else {
       if (temperature >= celsiusThreshholds.hot) {
-        setWeather("hot");
+        setWeatherType("hot");
       } else if (temperature >= celsiusThreshholds.warm) {
-        setWeather("warm");
+        setWeatherType("warm");
       } else {
-        setWeather("cold");
+        setWeatherType("cold");
       }
     }
   }, [currentTemperatureUnit]);
@@ -42,10 +41,10 @@ function Main({
   return (
     <main className="main app__main">
       <WeatherCard
-        weatherId={weatherId}
+        weatherId={weather.weatherId}
         temperature={temperature}
-        sunrise={sunrise}
-        sunset={sunset}
+        sunrise={weather.sunrise}
+        sunset={weather.sunset}
       />
       <section className="main__cards-wrapper">
         <p className="main__section-heading">
@@ -55,7 +54,7 @@ function Main({
         <ul className="main__cards">
           {clothingItems.map(
             (item) =>
-              item.weather === weather && (
+              item.weather === weatherType && (
                 <ItemCard
                   key={item._id}
                   item={item}

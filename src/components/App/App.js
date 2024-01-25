@@ -12,35 +12,36 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
 import { getItems, addItem, deleteItem } from "../../utils/api";
-import { register, authorize } from "../../utils/auth";
+import * as auth from "../../utils/auth";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 
 function App() {
-  const [location, setLocation] = useState("");
-  const [weatherId, setWeatherId] = useState(800);
-  const [temperature, setTemperature] = useState({ F: 0, C: 0 });
-  const [sunrise, setSunrise] = useState(0);
-  const [sunset, setSunset] = useState(0);
+  const [currentWeather, setCurrentWeather] = useState({location: "",
+weatherId: 800,
+temperature: {F: 0, C: 0},
+sunrise: 0,
+sunset: 0});
   const [openModal, setOpenModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  const history = useHistory();
 
   //load in weather data once when the website is accessed
   useEffect(() => {
     getWeatherInfo()
       .then((res) => {
-        setLocation(res.name);
-        setWeatherId(res.weather[0].id);
-        setTemperature({
-          F: Math.round(res.main.temp),
-          C: Math.round(((res.main.temp - 32) * 5) / 9),
-        });
-        setSunrise(res.sys.sunrise);
-        setSunset(res.sys.sunset);
+        setCurrentWeather({location: res.name,
+        weatherId: res.weather[0].id,
+        temperature: {F: Math.round(res.main.temp),
+          C: Math.round(((res.main.temp - 32) * 5) / 9),},
+        sunrise: res.sys.sunrise,
+        sunset: res.sys.sunset});
       })
       .catch(console.error);
   }, []);
@@ -52,6 +53,11 @@ function App() {
         setClothingItems(res.data);
       })
       .catch((err) => console.error(err));
+  }, []);
+
+  //check for token and load in user data if the token is valid
+  useEffect(() => {
+    handleTokenCheck();
   }, []);
 
   //add and remove the escape event listener when modals are opened
@@ -137,8 +143,23 @@ function App() {
     handleSubmit(makeRequest);
   };
 
+  const handleTokenCheck = () => {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          //add user data to the state
+          setCurrentUser(res);
+          setLoggedIn(true);
+          history.push("se_project_react/");
+        }
+      })
+      .catch((err) => console.error(err));
+    }
+  }
+
   const handleLogin = ({ email, password }) => {
-    return authorize(email, password)
+    return auth.authorize(email, password)
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
@@ -149,77 +170,77 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app">
-        <CurrentTemperatureUnitContext.Provider
-          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-        >
-          <Header
-            location={location}
-            onClickAdd={handleOpenGarmentForm}
-            onClickLogin={handleOpenLoginForm}
-            onClickRegister={handleOpenRegisterForm}
-          />
-          <Switch>
-            <Route exact path="/se_project_react/">
-              <Main
-                weatherId={weatherId}
-                temperature={temperature[`${currentTemperatureUnit}`]}
-                sunrise={sunrise}
-                sunset={sunset}
-                onSelectCard={handleSelectedCard}
-                clothingItems={clothingItems}
-              />
-            </Route>
-            <ProtectedRoute
-              path="/se_project_react/profile"
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="app">
+          <CurrentTemperatureUnitContext.Provider
+            value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+          >
+            <Header
+              location={location}
+              onClickAdd={handleOpenGarmentForm}
+              onClickLogin={handleOpenLoginForm}
+              onClickRegister={handleOpenRegisterForm}
               loggedIn={loggedIn}
-            >
-              <Profile
-                onSelectCard={handleSelectedCard}
-                onClickAdd={handleOpenGarmentForm}
-                clothingItems={clothingItems}
+            />
+            <Switch>
+              <Route exact path="/se_project_react/">
+                <Main
+                  weather={currentWeather}
+                  onSelectCard={handleSelectedCard}
+                  clothingItems={clothingItems}
+                />
+              </Route>
+              <ProtectedRoute
+                path="/se_project_react/profile"
+                loggedIn={loggedIn}
+              >
+                <Profile
+                  onSelectCard={handleSelectedCard}
+                  onClickAdd={handleOpenGarmentForm}
+                  clothingItems={clothingItems}
+                />
+              </ProtectedRoute>
+            </Switch>
+            <Footer />
+            {openModal === "garment-form" && (
+              <AddItemModal
+                onClose={handleCloseModal}
+                onAddItem={handleAddItemSubmit}
+                isLoading={isLoading}
               />
-            </ProtectedRoute>
-          </Switch>
-          <Footer />
-          {openModal === "garment-form" && (
-            <AddItemModal
-              onClose={handleCloseModal}
-              onAddItem={handleAddItemSubmit}
-              isLoading={isLoading}
-            />
-          )}
-          {openModal === "item" && (
-            <ItemModal
-              selectedCard={selectedCard}
-              onClose={handleCloseModal}
-              onDelete={openConfirmationModal}
-            />
-          )}
-          {openModal === "confirm" && (
-            <DeleteConfirmationModal
-              onClose={handleCloseModal}
-              onConfirm={handleCardDelete}
-              selectedCard={selectedCard}
-              isLoading={isLoading}
-            />
-          )}
-          {openModal === "register" && (
-            <RegisterModal
-              onClose={handleCloseModal}
-              isLoading={isLoading}
-              handleLogin={handleLogin}
-            />
-          )}
-          {openModal === "login" && (
-            <LoginModal
-              onClose={handleCloseModal}
-              isLoading={isLoading}
-              handleLogin={handleLogin}
-            />
-          )}
-        </CurrentTemperatureUnitContext.Provider>
-      </div>
+            )}
+            {openModal === "item" && (
+              <ItemModal
+                selectedCard={selectedCard}
+                onClose={handleCloseModal}
+                onDelete={openConfirmationModal}
+              />
+            )}
+            {openModal === "confirm" && (
+              <DeleteConfirmationModal
+                onClose={handleCloseModal}
+                onConfirm={handleCardDelete}
+                selectedCard={selectedCard}
+                isLoading={isLoading}
+              />
+            )}
+            {openModal === "register" && (
+              <RegisterModal
+                onClose={handleCloseModal}
+                isLoading={isLoading}
+                handleLogin={handleLogin}
+              />
+            )}
+            {openModal === "login" && (
+              <LoginModal
+                onClose={handleCloseModal}
+                isLoading={isLoading}
+                handleLogin={handleLogin}
+              />
+            )}
+          </CurrentTemperatureUnitContext.Provider>
+        </div>
+      </CurrentUserContext.Provider>
     </BrowserRouter>
   );
 }

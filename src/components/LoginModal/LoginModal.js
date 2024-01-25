@@ -22,7 +22,7 @@ const LoginModal = ({ onClose, isLoading, handleLogin }) => {
     e.preventDefault();
     handleLogin(values).then(() => {
       onClose();
-      history.push("/se_project_react/profile");
+      history.push("/se_project_react/");
     });
   }
 
