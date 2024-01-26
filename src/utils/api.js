@@ -14,16 +14,16 @@ export const request = (url, options) => {
 
 export const getItems = () => {
   return request(`${baseUrl}/items`, {
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
   });
 };
 
-export const addItem = ({ name, imageUrl, weather }) => {
+export const addItem = ({ name, imageUrl, weather }, token) => {
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name,
@@ -33,7 +33,7 @@ export const addItem = ({ name, imageUrl, weather }) => {
   });
 };
 
-export const deleteItem = (id) => {
+export const deleteItem = (id, token) => {
   return request(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {

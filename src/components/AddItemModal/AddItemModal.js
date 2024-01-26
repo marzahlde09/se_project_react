@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
-import { useForm } from "../../hooks/useForm";
 
 const initialValues = { name: "", imageUrl: "", weather: "hot" };
 
 const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
-  const { values, handleChange, setValues } = useForm(initialValues);
+  const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState({ name: false, imageUrl: false });
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
@@ -19,12 +18,11 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
     onAddItem(values);
   }
 
-  const handleEnableSubmit = () => {
-    if (validity.name && validity.imageUrl) {
-      setSubmitEnabled(true);
-    } else {
-      setSubmitEnabled(false);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+    setValidity({ ...validity, [name]: e.target.validity.valid });
+    setSubmitEnabled(validity.name && validity.imageUrl);
   };
 
   return (
@@ -36,6 +34,7 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
       onSubmit={handleSubmit}
       hasAlternativeButton={false}
       alternativeButtonText=""
+      submitEnabled={submitEnabled}
     >
       <TextInput
         labelText="Name*"
@@ -47,7 +46,7 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
         required={true}
         minLength={2}
         maxLength={30}
-        onChange={handleEnableSubmit}
+        onChange={handleChange}
       />
       <TextInput
         labelText="Image*"
@@ -57,7 +56,7 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
         initialValue=""
         errorText="Invalid Image URL"
         required={true}
-        onChange={handleEnableSubmit}
+        onChange={handleChange}
       />
       <p>Select the weather type:</p>
       <label>

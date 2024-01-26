@@ -1,4 +1,4 @@
-.item-modal{
+.item-modal {
   border-radius: 16px;
   flex-direction: column;
   overflow: hidden;
@@ -8,7 +8,7 @@
   max-width: 498px;
 }
 
-.item-modal__close-button{
+.item-modal__close-button {
   cursor: pointer;
   position: absolute;
   background-image: url(../../images/item_close.png);
@@ -24,7 +24,7 @@
   border: none;
 }
 
-.item-modal__close-button:hover{
+.item-modal__close-button:hover {
   opacity: 0.6;
 }
 
@@ -43,14 +43,14 @@
   align-items: flex-start;
 }
 
-.item-modal__info-wrapper{
+.item-modal__info-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.item-modal__text{
+.item-modal__text {
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 1.25em;
@@ -58,18 +58,26 @@
   margin: 12px 0 0 0;
 }
 
-.item-modal__text:first-of-type{
+.item-modal__text:first-of-type {
   margin-top: 0;
 }
 
-.item-modal__delete{
+.item-modal__delete {
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 1.25em;
-  color: #FF4D00;
+  color: #ff4d00;
   padding: 0;
   margin: 0;
   background-color: rgba(0, 0, 0, 0);
   border: none;
   cursor: pointer;
+}
+
+.item-modal__delete_visible {
+  visibility: visible;
+}
+
+.item-modal__delete_hidden {
+  visibility: hidden;
 }
