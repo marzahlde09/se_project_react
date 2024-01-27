@@ -42,3 +42,17 @@ export const deleteItem = (id, token) => {
     },
   });
 };
+
+export const updateProfile = ({ name, avatar }, token) => {
+  return request(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name,
+      avatar,
+    }),
+  });
+};

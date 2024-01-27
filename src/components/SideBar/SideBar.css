@@ -1,21 +1,53 @@
-.side-bar{
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.side-bar__profile-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
 
-.side-bar__avatar{
+.side-bar__avatar {
   height: 56px;
   width: 56px;
-  border: 1px rgba(0, 0, 0, .5) solid;
+  border: 1px rgba(0, 0, 0, 0.5) solid;
   border-radius: 50%;
 }
 
-.side-bar__name{
+.side-bar__name {
   margin: 0 0 0 16px;
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-size: 1.25em;
   font-weight: 700;
   padding: 0;
+}
+
+.side-bar__button-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 24px;
+}
+.side-bar__button {
+  margin-top: 8px;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25em;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+}
+
+.side-bar__button:first-of-type {
+  margin-top: 0;
+}
+
+.side-bar__button:active {
+  border: none;
 }

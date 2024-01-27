@@ -10,8 +10,9 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
-import { getItems, addItem, deleteItem } from "../../utils/api";
+import { getItems, addItem, deleteItem, updateProfile } from "../../utils/api";
 import * as auth from "../../utils/auth";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -37,7 +38,7 @@ function App() {
   //check for token and load in user data if the token is valid
   useEffect(() => {
     handleTokenCheck();
-  }, []);
+  }, [loggedIn]);
 
   //load in weather data once when the website is accessed
   useEffect(() => {
@@ -117,6 +118,10 @@ function App() {
     setOpenModal("confirm");
   };
 
+  const handleOpenEditProfileForm = () => {
+    setOpenModal("edit-profile");
+  };
+
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F"
       ? setCurrentTemperatureUnit("C")
@@ -181,6 +186,19 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    setLoggedIn(false);
+    setCurrentUser({});
+    history.push("/se_project_react/");
+  };
+
+  const handleEditProfile = (data) => {
+    return updateProfile(data, localStorage.getItem("jwt")).then((res) =>
+      setCurrentUser(res.data)
+    );
+  };
+
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>
       <div className="app">
@@ -209,6 +227,8 @@ function App() {
               <Profile
                 onSelectCard={handleSelectedCard}
                 onClickAdd={handleOpenGarmentForm}
+                onClickEdit={handleOpenEditProfileForm}
+                onClickLogout={handleLogout}
                 clothingItems={clothingItems}
               />
             </ProtectedRoute>
@@ -248,6 +268,13 @@ function App() {
               onClose={handleCloseModal}
               isLoading={isLoading}
               handleLogin={handleLogin}
+            />
+          )}
+          {openModal === "edit-profile" && (
+            <EditProfileModal
+              onClose={handleCloseModal}
+              isLoading={isLoading}
+              handleEditProfile={handleEditProfile}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>

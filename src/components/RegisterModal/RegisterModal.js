@@ -98,6 +98,8 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
         placeholder="Name"
         initialValue=""
         errorText="Name must be between 2 and 30 characters"
+        minLength={2}
+        maxLength={30}
         required={true}
         onChange={handleChange}
       />
