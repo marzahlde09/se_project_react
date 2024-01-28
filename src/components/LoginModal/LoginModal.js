@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useHistory } from "react-router-dom";
 import TextInput from "../TextInput/TextInput";
 
 const initialValues = { email: "", password: "" };
@@ -10,7 +9,6 @@ const LoginModal = ({ onClose, isLoading, handleLogin }) => {
   const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState(initialValidity);
   const [submitEnabled, setSubmitEnabled] = useState(false);
-  const history = useHistory();
 
   useEffect(() => {
     setValues(initialValues);
@@ -22,7 +20,6 @@ const LoginModal = ({ onClose, isLoading, handleLogin }) => {
     e.preventDefault();
     handleLogin(values).then(() => {
       onClose();
-      history.push("/se_project_react/");
     });
   }
 

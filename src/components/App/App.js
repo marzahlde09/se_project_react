@@ -191,12 +191,12 @@ function App() {
             //add user data to the state
             setCurrentUser(res.data);
             setLoggedIn(true);
-            history.push("/se_project_react/");
+            history.push("/");
           }
         })
         .then(() => {
           setLoggedIn(true);
-          history.push("/se_project_react/");
+          history.push("/");
         })
         .catch((err) => console.error(err));
     }
@@ -217,7 +217,7 @@ function App() {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
-    history.push("/se_project_react/");
+    history.push("/");
   };
 
   const handleEditProfile = (data) => {
@@ -240,7 +240,7 @@ function App() {
             loggedIn={loggedIn}
           />
           <Switch>
-            <Route exact path="/se_project_react/">
+            <Route exact path="/">
               <Main
                 weather={currentWeather}
                 onSelectCard={handleSelectedCard}
@@ -249,10 +249,7 @@ function App() {
                 onCardLike={handleCardLike}
               />
             </Route>
-            <ProtectedRoute
-              path="/se_project_react/profile"
-              loggedIn={loggedIn}
-            >
+            <ProtectedRoute path="/profile" loggedIn={loggedIn}>
               <Profile
                 onSelectCard={handleSelectedCard}
                 onClickAdd={handleOpenGarmentForm}

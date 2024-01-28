@@ -11,17 +11,12 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
     avatar: true,
   });
   const [submitEnabled, setSubmitEnabled] = useState(false);
-  const [submissionError, setSubmissionError] = useState({
-    errorStatus: false,
-    message: "",
-  });
   const { currentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
     console.log(currentUser);
     setValues({ name: currentUser.name, avatar: currentUser.avatar });
     setSubmitEnabled(false);
-    setSubmissionError({ errorStatus: false, message: "" });
   }, []);
 
   function handleSubmit(e) {
@@ -32,10 +27,6 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
       })
       .catch((err) => {
         console.log(err);
-        setSubmissionError({
-          errorStatus: true,
-          message: "Something went wrong!",
-        });
       });
   }
 

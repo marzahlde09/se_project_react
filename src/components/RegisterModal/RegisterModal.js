@@ -15,16 +15,11 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
     avatar: false,
   });
   const [submitEnabled, setSubmitEnabled] = useState(false);
-  const [submissionError, setSubmissionError] = useState({
-    errorStatus: false,
-    message: "",
-  });
   const history = useHistory();
 
   useEffect(() => {
     setValues(initialValues);
     setSubmitEnabled(false);
-    setSubmissionError({ errorStatus: false, message: "" });
   }, []);
 
   function handleSubmit(e) {
@@ -37,16 +32,11 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
             if (data.token) {
               handleLogin();
               onClose();
-              history.push("/se_project_react/profile");
+              history.push("/profile");
             }
           })
           .catch((err) => console.log(err));
         onClose();
-      } else {
-        setSubmissionError({
-          errorStatus: true,
-          message: "Something went wrong!",
-        });
       }
     });
   }

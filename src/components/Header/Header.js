@@ -20,7 +20,7 @@ function Header({
   return (
     <header className="header">
       <div className="header__wrapper">
-        <Link to="/se_project_react/">
+        <Link to="/">
           <img className="header__logo" src={logo} alt="WTWR Logo" />
         </Link>
         <p className="header__date-location">
@@ -34,7 +34,7 @@ function Header({
             + Add clothes
           </button>
           <p className="header__name">{currentUser.name}</p>
-          <Link to="/se_project_react/profile">
+          <Link to="/profile">
             <img
               className="header__avatar"
               src={currentUser.avatar}
