@@ -14,7 +14,7 @@ WTWR web page that displays a gallery of garments depending on the weather. The 
 
 ## Link to Back End API
 
-[github-link](https://github.com/marzahlde09/se_project_express)
+[backend-api-link](https://github.com/marzahlde09/se_project_express)
 
 ## Link to GitHub Pages
 
