@@ -12,6 +12,10 @@ WTWR web page that displays a gallery of garments depending on the weather. The 
 - BEM Methodology
 - API requests
 
+## Link to Back End API
+
+[github-link](https://github.com/marzahlde09/se_project_express)
+
 ## Link to GitHub Pages
 
 [github-pages-link](https://marzahlde09.github.io/se_project_react/)
