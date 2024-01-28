@@ -10,6 +10,8 @@ function Profile({
   onClickEdit,
   onClickLogout,
   clothingItems,
+  onCardLike,
+  loggedIn,
 }) {
   return (
     <section className="profile app__profile">
@@ -18,6 +20,8 @@ function Profile({
         onSelectCard={onSelectCard}
         onClickAdd={onClickAdd}
         clothingItems={clothingItems}
+        onCardLike={onCardLike}
+        loggedIn={loggedIn}
       />
     </section>
   );

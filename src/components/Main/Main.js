@@ -9,7 +9,7 @@ import {
   celsiusThreshholds,
 } from "../../utils/constants";
 
-function Main({ weather, onSelectCard, clothingItems }) {
+function Main({ weather, onSelectCard, clothingItems, loggedIn, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const [temperature, setTemperature] = useState(0);
   const [weatherType, setWeatherType] = useState("");
@@ -55,6 +55,8 @@ function Main({ weather, onSelectCard, clothingItems }) {
                   key={item._id}
                   item={item}
                   onSelectCard={onSelectCard}
+                  loggedIn={loggedIn}
+                  onCardLike={onCardLike}
                 />
               )
           )}

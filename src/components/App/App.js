@@ -12,7 +12,14 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
-import { getItems, addItem, deleteItem, updateProfile } from "../../utils/api";
+import {
+  getItems,
+  addItem,
+  deleteItem,
+  updateProfile,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api";
 import * as auth from "../../utils/auth";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -139,7 +146,7 @@ function App() {
   const handleAddItemSubmit = (data) => {
     const makeRequest = () => {
       return addItem(data, localStorage.getItem("jwt")).then((res) => {
-        setClothingItems([res, ...clothingItems]);
+        setClothingItems([res.data, ...clothingItems]);
       });
     };
     handleSubmit(makeRequest);
@@ -152,6 +159,26 @@ function App() {
       });
     };
     handleSubmit(makeRequest);
+  };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    isLiked
+      ? removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((c) => (c._id === id ? updatedCard.data : c))
+            );
+          })
+          .catch((err) => console.error(err))
+      : addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((c) => (c._id === id ? updatedCard.data : c))
+            );
+          })
+          .catch((err) => console.error(err));
+    console.log(clothingItems);
   };
 
   const handleTokenCheck = () => {
@@ -218,6 +245,8 @@ function App() {
                 weather={currentWeather}
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
+                loggedIn={loggedIn}
+                onCardLike={handleCardLike}
               />
             </Route>
             <ProtectedRoute
@@ -230,6 +259,8 @@ function App() {
                 onClickEdit={handleOpenEditProfileForm}
                 onClickLogout={handleLogout}
                 clothingItems={clothingItems}
+                loggedIn={loggedIn}
+                onCardLike={handleCardLike}
               />
             </ProtectedRoute>
           </Switch>

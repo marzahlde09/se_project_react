@@ -3,7 +3,13 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function ClothesSection({ onSelectCard, onClickAdd, clothingItems }) {
+function ClothesSection({
+  onSelectCard,
+  onClickAdd,
+  clothingItems,
+  onCardLike,
+  loggedIn,
+}) {
   const { currentUser } = useContext(CurrentUserContext);
 
   return (
@@ -21,11 +27,13 @@ function ClothesSection({ onSelectCard, onClickAdd, clothingItems }) {
       <ul className="clothes-section__cards">
         {clothingItems.map(
           (item) =>
-            currentUser._id === item.owner._id && (
+            currentUser._id === item.owner && (
               <ItemCard
                 key={item._id}
                 item={item}
                 onSelectCard={onSelectCard}
+                onCardLike={onCardLike}
+                loggedIn={loggedIn}
               />
             )
         )}
