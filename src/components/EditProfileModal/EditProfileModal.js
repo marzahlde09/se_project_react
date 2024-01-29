@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { updateProfile } from "../../utils/api";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
-  const [values, setValues] = useState({ name: "", avatar: "" });
+  const [values, setValues] = useState({});
   const [validity, setValidity] = useState({
     name: true,
     avatar: true,
@@ -14,9 +13,11 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
   const { currentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
-    console.log(currentUser);
+    setSubmitEnabled(validity.name && validity.avatar);
+  });
+
+  useEffect(() => {
     setValues({ name: currentUser.name, avatar: currentUser.avatar });
-    setSubmitEnabled(false);
   }, []);
 
   function handleSubmit(e) {

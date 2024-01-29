@@ -6,7 +6,7 @@ import TextInput from "../TextInput/TextInput";
 
 const initialValues = { email: "", password: "", name: "", avatar: "" };
 
-const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
+const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
   const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState({
     email: false,
@@ -18,9 +18,10 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
   const history = useHistory();
 
   useEffect(() => {
-    setValues(initialValues);
-    setSubmitEnabled(false);
-  }, []);
+    setSubmitEnabled(
+      validity.email && validity.password && validity.name && validity.avatar
+    );
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +37,6 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
             }
           })
           .catch((err) => console.log(err));
-        onClose();
       }
     });
   }
@@ -45,9 +45,6 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
     setValidity({ ...validity, [name]: e.target.validity.valid });
-    setSubmitEnabled(
-      validity.email && validity.password && validity.name && validity.avatar
-    );
   };
 
   return (
@@ -59,6 +56,7 @@ const RegisterModal = ({ onClose, isLoading, handleLogin }) => {
       onSubmit={handleSubmit}
       hasAlternativeButton={true}
       alternativeButtonText="or Log in"
+      alternativeButtonClick={onClickLogin}
       submitEnabled={submitEnabled}
     >
       <TextInput

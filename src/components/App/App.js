@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -153,8 +153,9 @@ function App() {
   };
 
   const handleCardDelete = (id) => {
+    const token = localStorage.getItem("jwt");
     const makeRequest = () => {
-      return deleteItem(id).then((res) => {
+      return deleteItem(id, token).then(() => {
         setClothingItems(clothingItems.filter((item) => item._id !== id));
       });
     };
@@ -178,7 +179,6 @@ function App() {
             );
           })
           .catch((err) => console.error(err));
-    console.log(clothingItems);
   };
 
   const handleTokenCheck = () => {
@@ -191,26 +191,14 @@ function App() {
             //add user data to the state
             setCurrentUser(res.data);
             setLoggedIn(true);
-            history.push("/");
           }
-        })
-        .then(() => {
-          setLoggedIn(true);
-          history.push("/");
         })
         .catch((err) => console.error(err));
     }
   };
 
-  const handleLogin = ({ email, password }) => {
-    return auth
-      .authorize(email, password)
-      .then((data) => {
-        if (data.token) {
-          setLoggedIn(true);
-        }
-      })
-      .catch((err) => console.log(err));
+  const handleLogin = () => {
+    setLoggedIn(true);
   };
 
   const handleLogout = () => {
@@ -249,7 +237,11 @@ function App() {
                 onCardLike={handleCardLike}
               />
             </Route>
-            <ProtectedRoute path="/profile" loggedIn={loggedIn}>
+            <ProtectedRoute
+              path="/profile"
+              loggedIn={loggedIn}
+              onCheckAuthorization={handleTokenCheck}
+            >
               <Profile
                 onSelectCard={handleSelectedCard}
                 onClickAdd={handleOpenGarmentForm}
@@ -289,6 +281,7 @@ function App() {
               onClose={handleCloseModal}
               isLoading={isLoading}
               handleLogin={handleLogin}
+              onClickLogin={handleOpenLoginForm}
             />
           )}
           {openModal === "login" && (
@@ -296,6 +289,7 @@ function App() {
               onClose={handleCloseModal}
               isLoading={isLoading}
               handleLogin={handleLogin}
+              onClickRegister={handleOpenRegisterForm}
             />
           )}
           {openModal === "edit-profile" && (

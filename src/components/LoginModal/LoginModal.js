@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
+import * as auth from "../../utils/auth";
+import { useHistory } from "react-router-dom";
 
 const initialValues = { email: "", password: "" };
 const initialValidity = { email: false, password: false };
 
-const LoginModal = ({ onClose, isLoading, handleLogin }) => {
+const LoginModal = ({ onClose, isLoading, handleLogin, onClickRegister }) => {
   const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState(initialValidity);
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
+  const history = useHistory();
+
   useEffect(() => {
-    setValues(initialValues);
-    setValidity(initialValidity);
-    setSubmitEnabled(false);
-  }, []);
+    setSubmitEnabled(validity.email && validity.password);
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleLogin(values).then(() => {
-      onClose();
-    });
+    auth
+      .authorize(values.email, values.password)
+      .then((data) => {
+        if (data.token) {
+          onClose();
+          handleLogin();
+          history.push("/profile");
+        }
+      })
+      .catch((err) => console.error(err));
   }
 
   const handleChange = (e) => {
@@ -39,6 +48,7 @@ const LoginModal = ({ onClose, isLoading, handleLogin }) => {
       onSubmit={handleSubmit}
       hasAlternativeButton={true}
       alternativeButtonText="or Register"
+      alternativeButtonClick={onClickRegister}
       submitEnabled={submitEnabled}
     >
       <TextInput

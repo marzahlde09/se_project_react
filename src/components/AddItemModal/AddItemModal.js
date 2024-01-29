@@ -10,8 +10,8 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
   useEffect(() => {
-    setValues(initialValues);
-  }, []);
+    setSubmitEnabled(validity.name && validity.imageUrl);
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,7 +22,6 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
     setValidity({ ...validity, [name]: e.target.validity.valid });
-    setSubmitEnabled(validity.name && validity.imageUrl);
   };
 
   return (

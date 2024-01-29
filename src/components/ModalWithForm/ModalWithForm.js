@@ -11,6 +11,7 @@ function ModalWithForm({
   onSubmit,
   hasAlternativeButton,
   alternativeButtonText,
+  alternativeButtonClick,
   submitEnabled,
 }) {
   return (
@@ -39,7 +40,11 @@ function ModalWithForm({
             </button>
           )}
           {hasAlternativeButton && (
-            <button type="button" className="form__alternative-button">
+            <button
+              type="button"
+              className="form__alternative-button"
+              onClick={alternativeButtonClick}
+            >
               {alternativeButtonText}
             </button>
           )}

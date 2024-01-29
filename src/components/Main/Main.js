@@ -11,10 +11,16 @@ import {
 
 function Main({ weather, onSelectCard, clothingItems, loggedIn, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  const [temperature, setTemperature] = useState(0);
+  const [temperature, setTemperature] = useState(
+    weather.temperature[`${currentTemperatureUnit}`]
+  );
   const [weatherType, setWeatherType] = useState("");
+
   useEffect(() => {
     setTemperature(weather.temperature[`${currentTemperatureUnit}`]);
+  }, [currentTemperatureUnit, weather.temperature]);
+
+  useEffect(() => {
     if (currentTemperatureUnit === "F") {
       if (temperature >= fahrenheitThreshholds.hot) {
         setWeatherType("hot");
@@ -32,7 +38,7 @@ function Main({ weather, onSelectCard, clothingItems, loggedIn, onCardLike }) {
         setWeatherType("cold");
       }
     }
-  }, [currentTemperatureUnit]);
+  }, [currentTemperatureUnit, temperature]);
 
   return (
     <main className="main app__main">
