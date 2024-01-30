@@ -8,16 +8,10 @@ function DeleteConfirmationModal({
   selectedCard,
   isLoading,
 }) {
-  const handleOutsideClickClose = (e) => {
-    if (e.target.classList.contains("modal")) {
-      onClose();
-    }
-  };
 
   return (
     <section
       className="modal modal_type_confirm"
-      onClick={handleOutsideClickClose}
     >
       <div className="delete-confirmation-modal">
         <button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./TextInput.css";
 
 const TextInput = ({
@@ -6,21 +6,22 @@ const TextInput = ({
   type,
   name,
   placeholder,
-  initialValue,
+  value,
+  validity,
   errorText,
   required,
   minLength,
   maxLength,
   onChange,
 }) => {
-  const [value, setValue] = useState(initialValue);
-  const [validity, setValidity] = useState(true);
+  //const [value, setValue] = useState(initialValue);
+  //const [validity, setValidity] = useState(true);
 
-  const handleChange = (e) => {
+  /*const handleChange = (e) => {
     setValue(e.target.value);
     setValidity(e.target.validity.valid);
     onChange(e);
-  };
+  };*/
 
   return (
     <div className="text-input">
@@ -42,7 +43,7 @@ const TextInput = ({
         id={name}
         placeholder={placeholder}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         className="text-input__input"
         required={required}
         minLength={minLength}

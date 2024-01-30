@@ -26,19 +26,15 @@ function ModalWithForm({
         <p className="form__title">{title}</p>
         {children}
         <div className="form__button-wrapper">
-          {submitEnabled ? (
-            <button type="submit" className="form__submit">
-              {buttonText}
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="form__submit form__submit_disabled"
-              disabled
-            >
-              {buttonText}
-            </button>
-          )}
+          <button
+            type="submit"
+            className={`form__submit ${
+              submitEnabled ? "" : "form__submit_disabled"
+            } `}
+            disabled={!submitEnabled}
+          >
+            {buttonText}
+          </button>
           {hasAlternativeButton && (
             <button
               type="button"

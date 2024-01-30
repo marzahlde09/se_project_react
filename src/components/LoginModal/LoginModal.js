@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
-import * as auth from "../../utils/auth";
-import { useHistory } from "react-router-dom";
 
 const initialValues = { email: "", password: "" };
 const initialValidity = { email: false, password: false };
@@ -12,24 +10,16 @@ const LoginModal = ({ onClose, isLoading, handleLogin, onClickRegister }) => {
   const [validity, setValidity] = useState(initialValidity);
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
-  const history = useHistory();
-
   useEffect(() => {
     setSubmitEnabled(validity.email && validity.password);
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .authorize(values.email, values.password)
-      .then((data) => {
-        if (data.token) {
-          onClose();
-          handleLogin();
-          history.push("/profile");
-        }
-      })
-      .catch((err) => console.error(err));
+    handleLogin(values)
+      .then(() => {
+        onClose();
+      });
   }
 
   const handleChange = (e) => {
@@ -56,7 +46,8 @@ const LoginModal = ({ onClose, isLoading, handleLogin, onClickRegister }) => {
         type="email"
         name="email"
         placeholder="Email"
-        initialValue=""
+        value={values.email}
+        validity={validity.email}
         errorText="Invalid email"
         required={true}
         onChange={handleChange}
@@ -66,7 +57,8 @@ const LoginModal = ({ onClose, isLoading, handleLogin, onClickRegister }) => {
         type="password"
         name="password"
         placeholder="Password"
-        initialValue=""
+        value={values.password}
+        validity={validity.password}
         errorText="Incorrect password"
         required={true}
         onChange={handleChange}

@@ -4,7 +4,7 @@ import TextInput from "../TextInput/TextInput";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({name: "", avatar: ""});
   const [validity, setValidity] = useState({
     name: true,
     avatar: true,
@@ -22,13 +22,7 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleEditProfile(values)
-      .then(() => {
-        onClose();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    handleEditProfile(values);
   }
 
   const handleChange = (e) => {
@@ -54,7 +48,8 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
         type="text"
         name="name"
         placeholder="Name"
-        initialValue={currentUser.name}
+        value={values.name}
+        validity={validity.name}
         errorText="Name must be between 2 and 30 characters"
         minLength={2}
         maxLength={30}
@@ -66,7 +61,8 @@ const EditProfileModal = ({ onClose, isLoading, handleEditProfile }) => {
         type="url"
         name="avatar"
         placeholder="Avatar URL"
-        initialValue={currentUser.avatar}
+        value={values.avatar}
+        validity={validity.avatar}
         errorText="Invalid URL"
         required={true}
         onChange={handleChange}

@@ -40,7 +40,8 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
         type="text"
         name="name"
         placeholder="Name"
-        initialValue=""
+        value={values.name}
+        validity={validity.name}
         errorText="Name must be between 2 and 30 characters"
         required={true}
         minLength={2}
@@ -52,7 +53,8 @@ const AddItemModal = ({ onAddItem, onClose, isLoading }) => {
         type="url"
         name="imageUrl"
         placeholder="Image URL"
-        initialValue=""
+        value={values.imageUrl}
+        validity={validity.imageUrl}
         errorText="Invalid Image URL"
         required={true}
         onChange={handleChange}

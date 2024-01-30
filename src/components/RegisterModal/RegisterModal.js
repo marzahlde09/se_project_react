@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { register, authorize } from "../../utils/auth";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import TextInput from "../TextInput/TextInput";
 
 const initialValues = { email: "", password: "", name: "", avatar: "" };
 
-const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
+const RegisterModal = ({ onClose, isLoading, onRegister, onClickLogin }) => {
   const [values, setValues] = useState(initialValues);
   const [validity, setValidity] = useState({
     email: false,
@@ -15,7 +13,6 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
     avatar: false,
   });
   const [submitEnabled, setSubmitEnabled] = useState(false);
-  const history = useHistory();
 
   useEffect(() => {
     setSubmitEnabled(
@@ -25,20 +22,10 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    let { email, password, name, avatar } = values;
-    register(name, avatar, email, password).then((res) => {
-      if (res) {
-        authorize(email, password)
-          .then((data) => {
-            if (data.token) {
-              handleLogin();
-              onClose();
-              history.push("/profile");
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    });
+    onRegister(values)
+      .then(() => {
+        onClose();
+      });
   }
 
   const handleChange = (e) => {
@@ -64,7 +51,8 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
         type="email"
         name="email"
         placeholder="Email"
-        initialValue=""
+        value={values.email}
+        validity={validity.email}
         errorText="Invalid email"
         required={true}
         onChange={handleChange}
@@ -74,7 +62,8 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
         type="password"
         name="password"
         placeholder="Password"
-        initialValue=""
+        value={values.password}
+        validity={validity.password}
         errorText="Incorrect password"
         required={true}
         onChange={handleChange}
@@ -84,7 +73,8 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
         type="text"
         name="name"
         placeholder="Name"
-        initialValue=""
+        value={values.name}
+        validity={validity.name}
         errorText="Name must be between 2 and 30 characters"
         minLength={2}
         maxLength={30}
@@ -96,7 +86,8 @@ const RegisterModal = ({ onClose, isLoading, handleLogin, onClickLogin }) => {
         type="url"
         name="avatar"
         placeholder="Avatar URL"
-        initialValue=""
+        value={values.avatar}
+        validity={validity.avatar}
         errorText="Invalid URL"
         required={true}
         onChange={handleChange}

@@ -1,5 +1,5 @@
 import { latitude, longitude, apiKey as APIkey } from "./constants";
-import { request } from "./api";
+import { request } from "./constants";
 
 export function getWeatherInfo() {
   return request(

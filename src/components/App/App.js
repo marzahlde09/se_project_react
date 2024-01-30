@@ -12,14 +12,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { getWeatherInfo } from "../../utils/weatherApi";
-import {
-  getItems,
-  addItem,
-  deleteItem,
-  updateProfile,
-  addCardLike,
-  removeCardLike,
-} from "../../utils/api";
+import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -67,7 +60,7 @@ function App() {
 
   //load in initial clothing items from the server
   useEffect(() => {
-    getItems()
+    api.getItems()
       .then((res) => {
         setClothingItems(res.data);
       })
@@ -145,7 +138,7 @@ function App() {
 
   const handleAddItemSubmit = (data) => {
     const makeRequest = () => {
-      return addItem(data, localStorage.getItem("jwt")).then((res) => {
+      return api.addItem(data, localStorage.getItem("jwt")).then((res) => {
         setClothingItems([res.data, ...clothingItems]);
       });
     };
@@ -155,9 +148,18 @@ function App() {
   const handleCardDelete = (id) => {
     const token = localStorage.getItem("jwt");
     const makeRequest = () => {
-      return deleteItem(id, token).then(() => {
+      return api.deleteItem(id, token).then(() => {
         setClothingItems(clothingItems.filter((item) => item._id !== id));
       });
+    };
+    handleSubmit(makeRequest);
+  };
+
+  const handleEditProfile = (data) => {
+    const makeRequest = () => {
+      return api.updateProfile(data, localStorage.getItem("jwt"))
+        .then((res) => setCurrentUser(res.data)
+      );
     };
     handleSubmit(makeRequest);
   };
@@ -165,14 +167,14 @@ function App() {
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
     isLiked
-      ? removeCardLike(id, token)
+      ? api.removeCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
               cards.map((c) => (c._id === id ? updatedCard.data : c))
             );
           })
           .catch((err) => console.error(err))
-      : addCardLike(id, token)
+      : api.addCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
               cards.map((c) => (c._id === id ? updatedCard.data : c))
@@ -182,36 +184,41 @@ function App() {
   };
 
   const handleTokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
-      auth
-        .checkToken(jwt)
+      return (localStorage.getItem("jwt") && auth
+        .checkToken(localStorage.getItem("jwt"))
         .then((res) => {
-          if (res) {
-            //add user data to the state
-            setCurrentUser(res.data);
-            setLoggedIn(true);
-          }
-        })
-        .catch((err) => console.error(err));
-    }
+          //add user data to the state
+          setCurrentUser(res.data);
+          setLoggedIn(true);
+      })
+        .catch((err) => console.error(err))
+      )
   };
 
-  const handleLogin = () => {
-    setLoggedIn(true);
+  const handleLogin = ({email, password}) => {
+    return auth
+      .authorize(email, password)
+      .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          setLoggedIn(true);
+          history.push("/profile");
+      })
+      .catch((err) => console.error(err));
   };
+
+  const handleRegister = ({name, avatar, email, password}) => {
+    return auth.register(name, avatar, email, password)
+      .then(() => {
+        handleLogin({email, password})
+      })
+      .catch((err) => console.error(err));
+  }
 
   const handleLogout = () => {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
     history.push("/");
-  };
-
-  const handleEditProfile = (data) => {
-    return updateProfile(data, localStorage.getItem("jwt")).then((res) =>
-      setCurrentUser(res.data)
-    );
   };
 
   return (
@@ -240,7 +247,7 @@ function App() {
             <ProtectedRoute
               path="/profile"
               loggedIn={loggedIn}
-              onCheckAuthorization={handleTokenCheck}
+              onCheckAuth={handleTokenCheck}
             >
               <Profile
                 onSelectCard={handleSelectedCard}
@@ -280,7 +287,7 @@ function App() {
             <RegisterModal
               onClose={handleCloseModal}
               isLoading={isLoading}
-              handleLogin={handleLogin}
+              onRegister={handleRegister}
               onClickLogin={handleOpenLoginForm}
             />
           )}
