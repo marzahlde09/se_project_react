@@ -188,18 +188,17 @@ function App() {
   };
 
   const handleTokenCheck = () => {
-    return (
-      localStorage.getItem("jwt") &&
-      auth
-        .checkToken(localStorage.getItem("jwt"))
-        .then((res) => {
-          //add user data to the state
-          setCurrentUser(res.data);
-          setLoggedIn(true);
-          setHasLoaded(true);
-        })
-        .catch((err) => console.error(err))
-    );
+    return localStorage.getItem("jwt")
+      ? auth
+          .checkToken(localStorage.getItem("jwt"))
+          .then((res) => {
+            //add user data to the state
+            setCurrentUser(res.data);
+            setLoggedIn(true);
+            setHasLoaded(true);
+          })
+          .catch((err) => console.error(err))
+      : setHasLoaded(true);
   };
 
   const handleLogin = ({ email, password }) => {
