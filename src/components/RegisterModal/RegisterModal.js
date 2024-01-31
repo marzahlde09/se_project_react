@@ -22,10 +22,7 @@ const RegisterModal = ({ onClose, isLoading, onRegister, onClickLogin }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onRegister(values)
-      .then(() => {
-        onClose();
-      });
+    onRegister(values);
   }
 
   const handleChange = (e) => {

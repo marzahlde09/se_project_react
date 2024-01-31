@@ -16,10 +16,7 @@ const LoginModal = ({ onClose, isLoading, handleLogin, onClickRegister }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleLogin(values)
-      .then(() => {
-        onClose();
-      });
+    handleLogin(values);
   }
 
   const handleChange = (e) => {
