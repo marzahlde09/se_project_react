@@ -5,7 +5,10 @@ export const longitude = "-88.331632";
 export const fahrenheitThreshholds = { hot: 86, warm: 66 };
 export const celsiusThreshholds = { hot: 30, warm: 19 };
 
-export const baseUrl = "http://localhost:3001";
+export const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "api.wtwr.hollandweather.net"
+    : "http://localhost:3001";
 
 const checkResponse = (res) => {
   if (res.ok) {
