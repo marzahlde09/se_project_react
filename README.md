@@ -16,9 +16,9 @@ WTWR web page that displays a gallery of garments depending on the weather. The 
 
 [backend-api-link](https://github.com/marzahlde09/se_project_express)
 
-## Link to GitHub Pages
+## Link to Website
 
-[github-pages-link](https://marzahlde09.github.io/se_project_react/)
+[url-to-website](https://wtwr.hollandweather.net)
 
 ## Plan on improving the project
 
