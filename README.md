@@ -14,11 +14,12 @@ WTWR web page that displays a gallery of garments depending on the weather. The 
 
 ## Link to Back End API
 
-[backend-api-link](https://github.com/marzahlde09/se_project_express)
+[backend-api-github-link](https://github.com/marzahlde09/se_project_express)
 
-## Link to Website
+## Frontend and backend domains
 
 [url-to-website](https://wtwr.hollandweather.net)
+[url-to-api](https://api.wtwr.hollandweather.net)
 
 ## Plan on improving the project
 
